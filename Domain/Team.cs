@@ -16,6 +16,9 @@ namespace Domain
         public int MakedGoals { get; set; }
         public int ConcededGoals { get; set; }
    
-
+        public Team(string name) 
+            {
+                Name = name;       
+            }
     }
 }

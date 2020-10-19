@@ -17,5 +17,17 @@ namespace Tests
             Assert.Equal(name, user.Name);
             Assert.Equal(perfil, user.Perfil);
         }
+
+        [Fact]
+        public void Should_contains_user_Torcedor()
+        {
+            var name = "Pedro Tavares";
+            var perfil = "Torcedor";
+            
+            var user = new User(name, perfil);
+
+            Assert.Equal(name, user.Name);
+            Assert.Equal(perfil, user.Perfil);
+        }
     }
 }
