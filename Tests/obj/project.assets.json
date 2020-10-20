@@ -3526,11 +3526,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
+      "projectUniqueName": "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
       "projectName": "Tests",
-      "projectPath": "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
+      "projectPath": "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
       "packagesPath": "C:\\Users\\Entra21\\.nuget\\packages\\",
-      "outputPath": "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\obj\\",
+      "outputPath": "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Entra21\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3546,8 +3546,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj": {
-              "projectPath": "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj"
+            "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj": {}
+    "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj": {}
   },
   "projects": {
-    "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj": {
+    "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj",
+        "projectPath": "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Entra21\\.nuget\\packages\\",
-        "outputPath": "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\obj\\",
+        "outputPath": "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Entra21\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -56,14 +56,14 @@
         }
       }
     },
-    "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj": {
+    "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
+        "projectUniqueName": "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
+        "projectPath": "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\Tests.csproj",
         "packagesPath": "C:\\Users\\Entra21\\.nuget\\packages\\",
-        "outputPath": "c:\\C#\\tigs\\BrasileiraoProject\\Tests\\obj\\",
+        "outputPath": "C:\\C#\\tigs\\BrasileiraoProject\\Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Entra21\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -79,8 +79,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj": {
-                "projectPath": "c:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj"
+              "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\C#\\tigs\\BrasileiraoProject\\Domain\\Domain.csproj"
               }
             }
           }
