@@ -1,5 +1,4 @@
 using System;
-
 namespace Domain
 {
     public class Player
@@ -14,9 +13,5 @@ namespace Domain
         {
             Name = name;
         }
-        
-
-
-
     }
 }

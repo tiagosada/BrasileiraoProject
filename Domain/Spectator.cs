@@ -2,9 +2,12 @@ using System;
 
 namespace Domain
 {
-    // public class Spectator : User
-    // {
-    //     public double Aproveitamento { get; set; }
-
-    // }
+    public class Spectator
+    {
+        public Spectator(string name)
+        {
+            Name = name;
+        }
+        public string Name { get; private set; }
+    }
 }
