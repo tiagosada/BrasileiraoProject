@@ -1,9 +1,0 @@
-C:\C#\BrasileiraoProject\Domain\bin\Debug\netcoreapp3.1\Domain.deps.json
-C:\C#\BrasileiraoProject\Domain\bin\Debug\netcoreapp3.1\Domain.dll
-C:\C#\BrasileiraoProject\Domain\bin\Debug\netcoreapp3.1\Domain.pdb
-C:\C#\BrasileiraoProject\Domain\obj\Debug\netcoreapp3.1\Domain.csprojAssemblyReference.cache
-C:\C#\BrasileiraoProject\Domain\obj\Debug\netcoreapp3.1\Domain.AssemblyInfoInputs.cache
-C:\C#\BrasileiraoProject\Domain\obj\Debug\netcoreapp3.1\Domain.AssemblyInfo.cs
-C:\C#\BrasileiraoProject\Domain\obj\Debug\netcoreapp3.1\Domain.csproj.CoreCompileInputs.cache
-C:\C#\BrasileiraoProject\Domain\obj\Debug\netcoreapp3.1\Domain.dll
-C:\C#\BrasileiraoProject\Domain\obj\Debug\netcoreapp3.1\Domain.pdb
