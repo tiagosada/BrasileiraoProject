@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain
 {
@@ -17,7 +18,10 @@ namespace Domain
             players = new List<TeamPlayer>();
             Id = Guid.NewGuid();       
         }
-        
+         public Guid GetPlayerIdByName(string name)
+        {
+            return players.First(x => x.Name == name).Id;
+        }
         public bool AddPlayer(TeamPlayer teamPlayer)
         {
             if (players.Count > 32 )
@@ -27,7 +31,7 @@ namespace Domain
             players.Add(teamPlayer);
             return true;
         }
-        public bool RemoverJogador(TeamPlayer teamPlayer)
+        public bool RemovePlayer(TeamPlayer teamPlayer)
         {
             if (players.Count < 16)
             {
