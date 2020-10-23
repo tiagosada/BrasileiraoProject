@@ -13,7 +13,7 @@ namespace Domain
         private bool Draw = false;
         public int MakedGoals { get; private set;}
         public int ConcededGoals { get; private set;} 
-        public double ExploitationRate { get; private set;} = 0.0;
+        public double Rate { get; private set;} = 0.0;
 
       
        
@@ -30,7 +30,7 @@ namespace Domain
 
        }
        
-        public void ScoreDeafeat()
+        public void ScoreDefeat()
         {
             Defeats++;
         }
@@ -52,9 +52,9 @@ namespace Domain
             MakedGoals++;
         }
 
-        public void AtualizeExploitationRate()
+        public void AtualizeRate()
         {
-            ExploitationRate = (Score/(PlayedMatchs * 3.0))*100.0;
+            Rate = (Score/(PlayedMatchs * 3.0))*100.0;
         }
         public void SetScore()
         {
@@ -71,7 +71,7 @@ namespace Domain
         
         public override string ToString()
         {
-            return $"{Score} | {PlayedMatchs} | {Wins} | {Draws} | {Defeats} | {MakedGoals} | {ConcededGoals} | {Math.Round(ExploitationRate, 2)}%";
+            return $"{Score} | {PlayedMatchs} | {Wins} | {Draws} | {Defeats} | {MakedGoals} | {ConcededGoals} | {Math.Round(Rate, 2)}%";
         }
     }
 }    

@@ -43,7 +43,7 @@ namespace Domain
         }
         public bool AddPlayersList(List<TeamPlayer> teamPlayers)
         {
-            if (players.Count > 32 && teamPlayers.Count+players.Count <=32)
+            if (players.Count > 32 || teamPlayers.Count+players.Count >=32)
             {
                 return false;
             }
