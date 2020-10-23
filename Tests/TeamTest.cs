@@ -66,23 +66,60 @@ namespace Tests
             Assert.True(removePlayer);
             Assert.Equal(16, team.Players.Count);
         }
+        [Fact]
+        public void Should_create_not_allow_to_add_more_than_32_players()
+        {
+            var name = "Flasco";
+            var player1 = new TeamPlayer("Lucaos");
+
+            var team = new Team(name);
+            var addPlayer = team.AddPlayer(player1);
+            var addPlayerList = team.AddPlayersList(TeamPlayersList);
+            var addPlayerList2 = team.AddPlayersList(TeamPlayersList2);
+
+            Assert.Equal(name, team.TeamName);
+            Assert.NotNull(team.Id);
+            Assert.Equal(16, team.Players.Count);
+            Assert.True(addPlayer);
+            Assert.True(addPlayerList);
+            Assert.False(addPlayerList2);
+        }
         public List<TeamPlayer> TeamPlayersList {get; set;} = new List<TeamPlayer>{
-                new TeamPlayer("Omar"),
-                new TeamPlayer("Matheus"),
-                new TeamPlayer("Raul"),
-                new TeamPlayer("Ruan"),
-                new TeamPlayer("Max"),
-                new TeamPlayer("Marcos"),
-                new TeamPlayer("Maicon"),
-                new TeamPlayer("Paulo"),
-                new TeamPlayer("Leandro"),
-                new TeamPlayer("Richardi"),
-                new TeamPlayer("Lucas"),
-                new TeamPlayer("John"),
-                new TeamPlayer("Sergio"),
-                new TeamPlayer("Kaka"),
-                new TeamPlayer("Iago"),
-                new TeamPlayer("Tiago"),
-                };
+            new TeamPlayer("Omar"),
+            new TeamPlayer("Matheus"),
+            new TeamPlayer("Raul"),
+            new TeamPlayer("Ruan"),
+            new TeamPlayer("Max"),
+            new TeamPlayer("Marcos"),
+            new TeamPlayer("Maicon"),
+            new TeamPlayer("Paulo"),
+            new TeamPlayer("Leandro"),
+            new TeamPlayer("Richardi"),
+            new TeamPlayer("Lucas"),
+            new TeamPlayer("John"),
+            new TeamPlayer("Sergio"),
+            new TeamPlayer("Kaka"),
+            new TeamPlayer("Iago"),
+            new TeamPlayer("Tiago"),
+        };
+        public List<TeamPlayer> TeamPlayersList2 {get; set;} = new List<TeamPlayer>{
+            new TeamPlayer("Legolas"),
+            new TeamPlayer("Azhagal"),
+            new TeamPlayer("Ottoni"),
+            new TeamPlayer("Grah"),
+            new TeamPlayer("Vandir"),
+            new TeamPlayer("Ney"),
+            new TeamPlayer("Ronaldo"),
+            new TeamPlayer("Roberto"),
+            new TeamPlayer("Carlos"),
+            new TeamPlayer("Richardi"),
+            new TeamPlayer("Leonidas"),
+            new TeamPlayer("Ranger"),
+            new TeamPlayer("Ronaldinho Gaúcho"),
+            new TeamPlayer("Lauricio"),
+            new TeamPlayer("Caco"),
+            new TeamPlayer("Patati"),
+        };
+                
     }
 }
