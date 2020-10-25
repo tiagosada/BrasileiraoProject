@@ -20,23 +20,26 @@ namespace Domain
         public void PlayMatch()
         {
             PlayedMatchs++;
+            UpdateRate();
         }     
         public void ScoreWin()
         {
             Wins++;
             Score+=3;
+            PlayMatch();    
         }
        
         public void ScoreDefeat()
         {
             Defeats++;
+            PlayMatch();
         }
 
         public void ScoreDraw()
         {
             Draws++;
             Score++;
-
+            PlayMatch();
         }
 
         public void ScoreConcededGoals()

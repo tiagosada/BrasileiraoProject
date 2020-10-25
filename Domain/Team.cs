@@ -15,8 +15,12 @@ namespace Domain
         public Team(string name) 
         {
             TeamName = name;
-            players = new List<Player>();
-            Id = Guid.NewGuid();       
+            players = new List<Player>();      
+        }
+        public Team(string name, List<Player> playerslist) 
+        {
+            TeamName = name;
+            players = playerslist;     
         }
          public Guid GetPlayerIdByName(string name)
         {
@@ -24,7 +28,7 @@ namespace Domain
         }
         public bool AddPlayer(Player Player)
         {
-            if (players.Count > 32 )
+            if (players.Count >= 32 )
             {
                 return false;
             }
@@ -33,7 +37,7 @@ namespace Domain
         }
         public bool RemovePlayer(Player Player)
         {
-            if (players.Count < 16)
+            if (players.Count <= 16)
             {
                 return false;
             }

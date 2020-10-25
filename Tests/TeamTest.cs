@@ -19,7 +19,7 @@ namespace Tests
             Assert.Empty(team.Players);
         }
         [Fact]
-        public void Should_create_a_Team_with_a_player()
+        public void Should_create_a_Team_and_add_a_player()
         {
             var name = "Flasco";
 
@@ -33,6 +33,17 @@ namespace Tests
         }
         [Fact]
         public void Should_create_a_Team_with_16_players()
+        {
+            var name = "Flasco";
+
+            var team = new Team(name, PlayersList);
+
+            Assert.Equal(name, team.TeamName);
+            Assert.NotNull(team.Id);
+            Assert.Equal(16, team.Players.Count);
+        }
+        [Fact]
+        public void Should_create_a_Team_and_add_16_players()
         {
             var name = "Flasco";
 
@@ -123,6 +134,7 @@ namespace Tests
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(1, team.Table.Wins);
+            Assert.Equal(1, team.Table.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -136,6 +148,7 @@ namespace Tests
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(1, team.Table.Defeats);
+            Assert.Equal(1, team.Table.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -148,6 +161,7 @@ namespace Tests
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(1, team.Table.Draws);
+            Assert.Equal(1, team.Table.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -184,6 +198,7 @@ namespace Tests
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(3, team.Table.Score);
+            Assert.Equal(1, team.Table.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -196,6 +211,7 @@ namespace Tests
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(1, team.Table.Score);
+            Assert.Equal(1, team.Table.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -204,12 +220,12 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.PlayMatch();
             team.Table.ScoreWin();
             team.Table.UpdateRate();
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(3, team.Table.Score);
+            Assert.Equal(1, team.Table.PlayedMatchs);
             Assert.Equal(100, team.Table.Rate);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
