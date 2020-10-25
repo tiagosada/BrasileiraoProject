@@ -2,17 +2,16 @@ using System;
 
 namespace Domain
 {
-    public abstract class TeamStatistics 
+    public class TeamStatistics 
     {
         public int Score { get; private set;}
         public int PlayedMatchs { get; private set;} 
         public int Wins { get; private set; } 
-        private bool Win = false;  
         public int Defeats { get; private set; }   
         public int Draws { get; private set;} 
-        private bool Draw = false;
         public int MakedGoals { get; private set;}
         public int ConcededGoals { get; private set;} 
+        public int GoalsDifference { get; private set;} 
         public double Rate { get; private set;} = 0.0;
 
       
@@ -22,13 +21,11 @@ namespace Domain
         {
             PlayedMatchs++;
         }     
-       public void ScoreWin()
-       {
+        public void ScoreWin()
+        {
             Wins++;
-            Win = true;
-            Draw = false;
-
-       }
+            Score+=3;
+        }
        
         public void ScoreDefeat()
         {
@@ -38,35 +35,30 @@ namespace Domain
         public void ScoreDraw()
         {
             Draws++;
-            Win = false;
-            Draw = true;
+            Score++;
+
         }
 
         public void ScoreConcededGoals()
         {
             ConcededGoals++;
+            UpdateGoalDifference();
         }
 
         public void ScoreMakedGoals()
         {
             MakedGoals++;
+            UpdateGoalDifference();
         }
+        public void UpdateGoalDifference()
+        {
+            GoalsDifference = MakedGoals - ConcededGoals;
+        }
+        
 
-        public void AtualizeRate()
+        public void UpdateRate()
         {
             Rate = (Score/(PlayedMatchs * 3.0))*100.0;
-        }
-        public void SetScore()
-        {
-            if (Win)
-            {
-                Score +=3;
-            }
-            else if (Draw)
-            {
-                Score +=1;
-            }
-
         }
         
         public override string ToString()

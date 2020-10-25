@@ -8,48 +8,55 @@ namespace Domain
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string TeamName { get; private set; }
-        private List<TeamPlayer> players { get; set; } = new List<TeamPlayer>();
-        public IReadOnlyCollection<TeamPlayer> Players => players;
-        public TeamStatistics Table { get; set;}
+        private List<Player> players { get; set; } = new List<Player>();
+        public IReadOnlyCollection<Player> Players => players;
+        public TeamStatistics Table { get; set;} = new TeamStatistics();
    
         public Team(string name) 
         {
             TeamName = name;
-            players = new List<TeamPlayer>();
+            players = new List<Player>();
             Id = Guid.NewGuid();       
         }
          public Guid GetPlayerIdByName(string name)
         {
             return players.First(x => x.Name == name).Id;
         }
-        public bool AddPlayer(TeamPlayer teamPlayer)
+        public bool AddPlayer(Player Player)
         {
             if (players.Count > 32 )
             {
                 return false;
             }
-            players.Add(teamPlayer);
+            players.Add(Player);
             return true;
         }
-        public bool RemovePlayer(TeamPlayer teamPlayer)
+        public bool RemovePlayer(Player Player)
         {
             if (players.Count < 16)
             {
                 return false;
             }
 
-            players.Remove(teamPlayer);
+            players.Remove(Player);
             return true;
         }
-        public bool AddPlayersList(List<TeamPlayer> teamPlayers)
+        public bool AddPlayersList(List<Player> Players)
         {
-            if (players.Count > 32 || teamPlayers.Count+players.Count >=32)
+            if (players.Count > 32 || Players.Count+players.Count >=32)
             {
                 return false;
             }
 
-            this.players = teamPlayers;
+            this.players.AddRange(Players);
             return true;
+        }
+        public void ScoreAGoal()
+        {
+            var random = new Random().Next(players.Count);
+            players[random].GiveGoal();
+            Table.ScoreMakedGoals();
+            
         }
     }
 }

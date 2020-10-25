@@ -22,7 +22,7 @@ namespace Tests
             var name = "John";
 
             var player = new TeamPlayer(name);
-            player.MakeGoal();
+            player.GiveGoal();
 
             Assert.Equal(name, player.Name);
             Assert.NotNull(player.Id);
@@ -34,9 +34,9 @@ namespace Tests
             var name = "John";
 
             var player = new TeamPlayer(name);
-            player.MakeGoal();
-            player.MakeGoal();
-            player.MakeGoal();
+            player.GiveGoal();
+            player.GiveGoal();
+            player.GiveGoal();
 
             Assert.Equal(name, player.Name);
             Assert.NotNull(player.Id);

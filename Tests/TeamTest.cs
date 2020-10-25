@@ -24,11 +24,10 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            var addPlayer = team.AddPlayer(new TeamPlayer("Lucaos"));
+            var addPlayer = team.AddPlayer(new Player("Lucaos"));
 
             Assert.Equal(name, team.TeamName);
             Assert.NotNull(team.Id);
-            Assert.NotEmpty(team.Players);
             Assert.Equal(1, team.Players.Count);
             Assert.True(addPlayer);
         }
@@ -38,7 +37,7 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            var addPlayerList = team.AddPlayersList(TeamPlayersList);
+            var addPlayerList = team.AddPlayersList(PlayersList);
 
             Assert.Equal(name, team.TeamName);
             Assert.NotNull(team.Id);
@@ -49,15 +48,15 @@ namespace Tests
         public void Should_create_a_Team_with_a_player_and_remove()
         {
             var name = "Flasco";
-            var player1 = new TeamPlayer("Lucaos");
+            var player1 = new Player("Lucaos");
 
             var team = new Team(name);
             var addPlayer = team.AddPlayer(player1);
-            var addPlayerList = team.AddPlayersList(TeamPlayersList);
+            var addPlayerList = team.AddPlayersList(PlayersList);
 
             Assert.Equal(name, team.TeamName);
             Assert.NotNull(team.Id);
-            Assert.Equal(16, team.Players.Count);
+            Assert.Equal(17, team.Players.Count);
             Assert.True(addPlayerList);
             Assert.True(addPlayer);
             
@@ -70,16 +69,16 @@ namespace Tests
         public void Should_create_not_allow_to_add_a_playerList_if_is_gonna_be_more_than_32_players()
         {
             var name = "Flasco";
-            var player1 = new TeamPlayer("Lucaos");
+            var player1 = new Player("Lucaos");
 
             var team = new Team(name);
             var addPlayer = team.AddPlayer(player1);
-            var addPlayerList = team.AddPlayersList(TeamPlayersList);
-            var addPlayerList2 = team.AddPlayersList(TeamPlayersList2);
+            var addPlayerList = team.AddPlayersList(PlayersList);
+            var addPlayerList2 = team.AddPlayersList(PlayersList2);
 
             Assert.Equal(name, team.TeamName);
             Assert.NotNull(team.Id);
-            Assert.Equal(16, team.Players.Count);
+            Assert.Equal(17, team.Players.Count);
             Assert.True(addPlayer);
             Assert.True(addPlayerList);
             Assert.False(addPlayerList2);
@@ -87,16 +86,16 @@ namespace Tests
         public void Should_create_not_allow_to_add_a_player_if_is_gonna_be_more_than_32_players()
         {
             var name = "Flasco";
-            var player1 = new TeamPlayer("Lucaos");
+            var player1 = new Player("Lucaos");
 
             var team = new Team(name);
-            var addPlayerList = team.AddPlayersList(TeamPlayersList);
-            var addPlayerList2 = team.AddPlayersList(TeamPlayersList2);
+            var addPlayerList = team.AddPlayersList(PlayersList);
+            var addPlayerList2 = team.AddPlayersList(PlayersList2);
             var addPlayer = team.AddPlayer(player1);
 
             Assert.Equal(name, team.TeamName);
             Assert.NotNull(team.Id);
-            Assert.Equal(16, team.Players.Count);
+            Assert.Equal(32, team.Players.Count);
             Assert.True(addPlayerList2);
             Assert.True(addPlayerList);
             Assert.False(addPlayer);
@@ -182,7 +181,6 @@ namespace Tests
 
             var team = new Team(name);
             team.Table.ScoreWin();
-            team.Table.SetScore();
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(3, team.Table.Score);
@@ -195,22 +193,20 @@ namespace Tests
 
             var team = new Team(name);
             team.Table.ScoreDraw();
-            team.Table.SetScore();
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(1, team.Table.Score);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
-        public void Should_create_a_Team_set_match_set_Score_3_and_AtualizeRate()
+        public void Should_create_a_Team_set_match_set_Score_3_and_UpdateRate()
         {
             var name = "Flasco";
 
             var team = new Team(name);
             team.Table.PlayMatch();
             team.Table.ScoreWin();
-            team.Table.SetScore();
-            team.Table.AtualizeRate();
+            team.Table.UpdateRate();
 
             Assert.Equal(name, team.TeamName);
             Assert.Equal(3, team.Table.Score);
@@ -219,42 +215,42 @@ namespace Tests
             Assert.Empty(team.Players);
         }
 //      <~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MOCKS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-        public List<TeamPlayer> TeamPlayersList {get; set;} = new List<TeamPlayer>{
-            new TeamPlayer("Omar"),
-            new TeamPlayer("Matheus"),
-            new TeamPlayer("Raul"),
-            new TeamPlayer("Ruan"),
-            new TeamPlayer("Max"),
-            new TeamPlayer("Marcos"),
-            new TeamPlayer("Maicon"),
-            new TeamPlayer("Paulo"),
-            new TeamPlayer("Leandro"),
-            new TeamPlayer("Richardi"),
-            new TeamPlayer("Lucas"),
-            new TeamPlayer("John"),
-            new TeamPlayer("Sergio"),
-            new TeamPlayer("Kaka"),
-            new TeamPlayer("Iago"),
-            new TeamPlayer("Tiago"),
+        public List<Player> PlayersList {get; set;} = new List<Player>{
+            new Player("Omar"),
+            new Player("Matheus"),
+            new Player("Raul"),
+            new Player("Ruan"),
+            new Player("Max"),
+            new Player("Marcos"),
+            new Player("Maicon"),
+            new Player("Paulo"),
+            new Player("Leandro"),
+            new Player("Richardi"),
+            new Player("Lucas"),
+            new Player("John"),
+            new Player("Sergio"),
+            new Player("Kaka"),
+            new Player("Iago"),
+            new Player("Tiago"),
         };
-        public List<TeamPlayer> TeamPlayersList2 {get; set;} = new List<TeamPlayer>
+        public List<Player> PlayersList2 {get; set;} = new List<Player>
         {
-            new TeamPlayer("Legolas"),
-            new TeamPlayer("Azhagal"),
-            new TeamPlayer("Ottoni"),
-            new TeamPlayer("Grah"),
-            new TeamPlayer("Vandir"),
-            new TeamPlayer("Ney"),
-            new TeamPlayer("Ronaldo"),
-            new TeamPlayer("Roberto"),
-            new TeamPlayer("Carlos"),
-            new TeamPlayer("Richardi"),
-            new TeamPlayer("Leonidas"),
-            new TeamPlayer("Ranger"),
-            new TeamPlayer("Ronaldinho Gaúcho"),
-            new TeamPlayer("Lauricio"),
-            new TeamPlayer("Caco"),
-            new TeamPlayer("Patati"),
+            new Player("Legolas"),
+            new Player("Azhagal"),
+            new Player("Ottoni"),
+            new Player("Grah"),
+            new Player("Vandir"),
+            new Player("Ney"),
+            new Player("Ronaldo"),
+            new Player("Roberto"),
+            new Player("Carlos"),
+            new Player("Fumadim"),
+            new Player("Leonidas"),
+            new Player("Ranger"),
+            new Player("Ronaldinho Gaúcho"),
+            new Player("Lauricio"),
+            new Player("Caco"),
+            new Player("Patati"),
         };      
     }
 }

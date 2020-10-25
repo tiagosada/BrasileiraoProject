@@ -11,15 +11,12 @@ namespace Domain
         public int Goals { get; set; }
         //public string Position { get; set; }
 
-        protected Player(string name)
+        public Player(string name)
         {
             Name = name;
             Id = Guid.NewGuid();
         }
-
-        protected Player(){}
-
-        public void MakeGoal()
+        public void GiveGoal()
         {
             this.Goals++;
         }
