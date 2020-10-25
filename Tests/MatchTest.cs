@@ -59,6 +59,55 @@ namespace Tests
             Assert.Equal(0, match.VisitingTeam.Table.ConcededGoals);
 
         }
+        public void Should_create_a_Match_and_play_it_controled()
+        {
+            var teamslistmethod = TeamsWithPlayersList();
+
+            var match = new Match(teamslistmethod[0], teamslistmethod[1]);
+
+            match.PlayMatch(2,1);
+
+            Assert.NotNull(match.Id);
+            Assert.Equal(teamslistmethod[0], match.HomeTeam);
+            Assert.Equal(teamslistmethod[1], match.VisitingTeam);
+            Assert.Equal(2, match.HomeTeamGoals);
+            Assert.Equal(2, match.HomeTeam.Table.MakedGoals);
+            Assert.Equal(1, match.HomeTeam.Table.ConcededGoals);
+
+            Assert.Equal(1, match.HomeTeam.Table.Wins);
+            Assert.Equal(1, match.HomeTeam.Table.PlayedMatchs);
+            Assert.Equal(0, match.HomeTeam.Table.Defeats);
+            Assert.Equal(0, match.HomeTeam.Table.Draws);
+
+
+            Assert.Equal(1, match.VisitingTeamGoals);
+            Assert.Equal(1, match.VisitingTeam.Table.MakedGoals);
+            Assert.Equal(2, match.VisitingTeam.Table.ConcededGoals);
+            
+            Assert.Equal(0, match.VisitingTeam.Table.Wins);
+            Assert.Equal(1, match.VisitingTeam.Table.PlayedMatchs);
+            Assert.Equal(1, match.VisitingTeam.Table.Defeats);
+            Assert.Equal(0, match.VisitingTeam.Table.Defeats);
+
+
+        }
+        public void Should_create_a_Match_and_play_it_random()
+        {
+            var teamslistmethod = TeamsWithPlayersList();
+
+            var match = new Match(teamslistmethod[0], teamslistmethod[1]);
+
+            match.PlayMatch();
+
+            Assert.NotNull(match.Id);
+            Assert.Equal(teamslistmethod[0], match.HomeTeam);
+            Assert.Equal(teamslistmethod[1], match.VisitingTeam);
+            Assert.NotNull(match.HomeTeamGoals);
+            Assert.NotNull(match.VisitingTeamGoals);
+
+        }
+
+
         public List<Team> TeamsWithPlayersList()
         {
             foreach (var team in TeamsList)

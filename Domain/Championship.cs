@@ -101,27 +101,9 @@ namespace Domain
             
             foreach (var match in CurrentRound.Matches)
             {
-                var rand = new Random();
-                var HomeGoals = rand.Next(5);
-                var VisitingGoals = rand.Next(5);
-                match.ScoreGoalsHomeTeam(HomeGoals);
-                match.ScoreGoalsVisitingTeam(VisitingGoals);
-                if (HomeGoals > VisitingGoals)
-                {
-                    match.HomeTeam.Table.ScoreWin();
-                    match.VisitingTeam.Table.ScoreDefeat();
-                }
-                else if (HomeGoals < VisitingGoals)
-                {
-                    match.VisitingTeam.Table.ScoreWin();
-                    match.HomeTeam.Table.ScoreDefeat();
-                }
-                else
-                {
-                    match.VisitingTeam.Table.ScoreDraw();
-                    match.HomeTeam.Table.ScoreDraw();
-                }
+               match.PlayMatch();
             }
+            
             CurrentRound.PlayedRound = true;
             return true;
         }
