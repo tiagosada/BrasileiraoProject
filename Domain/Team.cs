@@ -47,7 +47,7 @@ namespace Domain
         }
         public bool AddPlayersList(List<Player> Players)
         {
-            if (players.Count > 32 || Players.Count+players.Count >=32)
+            if (players.Count > 32 || Players.Count+players.Count >32)
             {
                 return false;
             }
@@ -57,9 +57,10 @@ namespace Domain
         }
         public void ScoreAGoal()
         {
+            Table.ScoreMakedGoals();
+            
             var random = new Random().Next(players.Count);
             players[random].GiveGoal();
-            Table.ScoreMakedGoals();
             
         }
     }

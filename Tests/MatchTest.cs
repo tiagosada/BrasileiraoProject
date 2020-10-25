@@ -6,6 +6,7 @@ namespace Tests
 {
     public class MatchTest
     {
+        [Fact]
         public void Should_create_a_Match()
         {
             var teamslistmethod = TeamsWithPlayersList();
@@ -15,14 +16,15 @@ namespace Tests
             Assert.NotNull(match.Id);
             Assert.Equal(teamslistmethod[0], match.HomeTeam);
             Assert.Equal(teamslistmethod[1], match.VisitingTeam);
-            Assert.Equal(0, match.HomeTeamGoals);
+            Assert.Null(match.HomeTeamGoals);
             Assert.Equal(0, match.HomeTeam.Table.MakedGoals);
             Assert.Equal(0, match.HomeTeam.Table.ConcededGoals);
-            Assert.Equal(0, match.VisitingTeamGoals);
+            Assert.Null(match.VisitingTeamGoals);
             Assert.Equal(0, match.VisitingTeam.Table.MakedGoals);
             Assert.Equal(0, match.VisitingTeam.Table.ConcededGoals);
 
         }
+        [Fact]
         public void Should_create_a_Match_and_score_a_goal_for_hometeam()
         {
             var teamslistmethod = TeamsWithPlayersList();
@@ -36,11 +38,12 @@ namespace Tests
             Assert.Equal(1, match.HomeTeamGoals);
             Assert.Equal(1, match.HomeTeam.Table.MakedGoals);
             Assert.Equal(0, match.HomeTeam.Table.ConcededGoals);
-            Assert.Equal(0, match.VisitingTeamGoals);
+            Assert.Null(match.VisitingTeamGoals);
             Assert.Equal(0, match.VisitingTeam.Table.MakedGoals);
             Assert.Equal(1, match.VisitingTeam.Table.ConcededGoals);
 
         }
+        [Fact]
         public void Should_create_a_Match_and_score_a_goal_for_visitingteam()
         {
             var teamslistmethod = TeamsWithPlayersList();
@@ -51,7 +54,7 @@ namespace Tests
             Assert.NotNull(match.Id);
             Assert.Equal(teamslistmethod[0], match.HomeTeam);
             Assert.Equal(teamslistmethod[1], match.VisitingTeam);
-            Assert.Equal(0, match.HomeTeamGoals);
+            Assert.Null(match.HomeTeamGoals);
             Assert.Equal(0, match.HomeTeam.Table.MakedGoals);
             Assert.Equal(1, match.HomeTeam.Table.ConcededGoals);
             Assert.Equal(1, match.VisitingTeamGoals);
@@ -59,6 +62,7 @@ namespace Tests
             Assert.Equal(0, match.VisitingTeam.Table.ConcededGoals);
 
         }
+        [Fact]
         public void Should_create_a_Match_and_play_it_controled()
         {
             var teamslistmethod = TeamsWithPlayersList();
@@ -87,10 +91,11 @@ namespace Tests
             Assert.Equal(0, match.VisitingTeam.Table.Wins);
             Assert.Equal(1, match.VisitingTeam.Table.PlayedMatchs);
             Assert.Equal(1, match.VisitingTeam.Table.Defeats);
-            Assert.Equal(0, match.VisitingTeam.Table.Defeats);
+            Assert.Equal(0, match.VisitingTeam.Table.Draws);
 
 
         }
+        [Fact]
         public void Should_create_a_Match_and_play_it_random()
         {
             var teamslistmethod = TeamsWithPlayersList();
@@ -107,7 +112,7 @@ namespace Tests
 
         }
 
-
+//       <~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Mocks~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
         public List<Team> TeamsWithPlayersList()
         {
             foreach (var team in TeamsList)

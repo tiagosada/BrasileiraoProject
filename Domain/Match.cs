@@ -65,7 +65,7 @@ namespace Domain
         public void ScoreGoalsHomeTeam(int goal)
         {
             HomeTeamGoals = goal;
-            for (int i = 0; i <= goal; i++)
+            for (int i = 0; i < goal; i++)
             {
                 HomeTeam.ScoreAGoal();
                 VisitingTeam.Table.ScoreConcededGoals();
@@ -75,7 +75,7 @@ namespace Domain
         public void ScoreGoalsVisitingTeam(int goal)
         {
             VisitingTeamGoals = goal;
-            for (int i = 0; i <= goal; i++)
+            for (int i = 0; i < goal; i++)
             {
                 VisitingTeam.ScoreAGoal();
                 HomeTeam.Table.ScoreConcededGoals();

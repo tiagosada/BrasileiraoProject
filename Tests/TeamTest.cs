@@ -94,6 +94,7 @@ namespace Tests
             Assert.True(addPlayerList);
             Assert.False(addPlayerList2);
         }
+        [Fact]
         public void Should_create_not_allow_to_add_a_player_if_is_gonna_be_more_than_32_players()
         {
             var name = "Flasco";
@@ -152,6 +153,7 @@ namespace Tests
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
+        [Fact]
         public void Should_create_a_Team_and_set_a_Draw()
         {
             var name = "Flasco";
@@ -165,6 +167,7 @@ namespace Tests
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
+        [Fact]
         public void Should_create_a_Team_and_set_a_ConcededGoals()
         {
             var name = "Flasco";
@@ -177,6 +180,7 @@ namespace Tests
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
+        [Fact]
         public void Should_create_a_Team_and_set_a_MakedGoals()
         {
             var name = "Flasco";
@@ -189,6 +193,7 @@ namespace Tests
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
+        [Fact]
         public void Should_create_a_Team_and_set_Score_3()
         {
             var name = "Flasco";
@@ -202,6 +207,7 @@ namespace Tests
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
+        [Fact]
         public void Should_create_a_Team_and_set_Score_1()
         {
             var name = "Flasco";
@@ -215,6 +221,7 @@ namespace Tests
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
+        [Fact]
         public void Should_create_a_Team_set_match_set_Score_3_and_UpdateRate()
         {
             var name = "Flasco";
