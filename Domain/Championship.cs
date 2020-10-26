@@ -37,10 +37,7 @@ namespace Domain
             {
                 return false;
             }
-            else if(teams.Count < 7)
-            {
-                return false;
-            }
+            
 
             teams = newteams;
             return true;
@@ -48,6 +45,10 @@ namespace Domain
         public bool RemovePlayer(User user, Player player, Guid IdTeam)
         {
             if(!CurrentUser.CBF)
+            {
+                return false;
+            }
+            if(teams.Count < 0)
             {
                 return false;
             }
@@ -66,9 +67,13 @@ namespace Domain
             teams.Find(x => x.Id == IdTeam).AddPlayer(player);
             return true;
         }
-        public bool CreateMatches(List<Team> teams)
+        public bool CreateMatches()
         {
             if(!CurrentUser.CBF)
+            {
+                return false;
+            }
+            if(teams.Count < 8)
             {
                 return false;
             }
@@ -88,7 +93,7 @@ namespace Domain
                 {
                     if(i != j)
                     {
-                        this.Matches.Add(new Match(teams[i], teams[j]) );
+                        Matches.Add(new Match(teams[i], teams[j]) );
                     } 
                 }
             }

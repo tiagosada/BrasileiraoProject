@@ -1,6 +1,7 @@
 using Xunit;
 using Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests
 {
@@ -68,10 +69,11 @@ namespace Tests
 
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            var tryRegist = champ.RegisterTeams(champ.CurrentUser, teamsmock);
 
-            var tryRegist = champ.RegisterTeams(champ.CurrentUser, TeamsMock());
-
-            Assert.Equal(TeamsMock().Count, champ.Teams.Count);
+            Assert.False(champ.championshipStart);
+            Assert.Equal(teamsmock.Count, champ.Teams.Count);
             Assert.True(tryRegist);
         }
         [Fact]
@@ -116,8 +118,8 @@ namespace Tests
 
             champ.RegisterUser("Tiago", "Pa$Sw0rD");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-
-            champ.RegisterTeams(champ.CurrentUser, TeamsMock());
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Add Player to Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamId = champ.GetTeamIdByName("Flasco");
 
@@ -128,7 +130,7 @@ namespace Tests
             var findedTeam = champ.GetTeamById(teamId);
             
             Assert.True(tryAdd);
-            Assert.Equal(findedTeam.Players.Count+1, findedTeam.Players.Count);
+            Assert.Equal(17, findedTeam.Players.Count);
             Assert.Equal("Leozim" , findedPlayer.Name);
         }
         [Fact]
@@ -154,8 +156,131 @@ namespace Tests
             Assert.Equal(16, findedTeam.Players.Count);
             Assert.False(tryAdd);
         }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_remove_a_Player()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Remove Player of Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamId = champ.GetTeamIdByName("Flasco");
+
+            var playerId = champ.GetPlayerIdByName("Marcos", teamId);
+            var findedPlayer = champ.GetPlayerById(playerId, teamId);
+            
+
+            var tryRemove = champ.RemovePlayer(champ.CurrentUser, findedPlayer, teamId);
+
+            var findedTeam = champ.GetTeamById(teamId);
+            
+            Assert.True(tryRemove);
+            Assert.Equal(15, findedTeam.Players.Count);
+            Assert.DoesNotContain(findedPlayer , findedTeam.Players);
+        }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_not_remove_a_Player_reason_not_CBF()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Remove Player of Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamId = champ.GetTeamIdByName("Flasco");
+
+            var playerId = champ.GetPlayerIdByName("Marcos", teamId);
+            var findedPlayer = champ.GetPlayerById(playerId, teamId);
+            
+            champ.RegisterUser("Leandro");
+
+            var tryRemove = champ.RemovePlayer(champ.CurrentUser, findedPlayer, teamId);
+
+            var findedTeam = champ.GetTeamById(teamId);
+            
+            Assert.False(tryRemove);
+            Assert.Equal(16, findedTeam.Players.Count);
+            Assert.Contains(findedPlayer , findedTeam.Players);
+        }
+
+//      <-----------------------------------[Matches Test]------------------------------------------------> 
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_Create_Matches()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            var tryCMat = champ.CreateMatches();
+
+            Assert.True(tryCMat);
+            Assert.NotEmpty(champ.Matches);
+            Assert.Equal(45, champ.Matches.Count);
+
+        }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_not_Create_Matches_reason_not_CBF()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+            champ.RegisterUser("Leandro");
+
+            var tryCMat = champ.CreateMatches();
+
+            Assert.False(tryCMat);
+            Assert.Empty(champ.Matches);
+
+        }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_not_Create_Matches_reason_not_enough_teams()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock(7);
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            var tryCMat = champ.CreateMatches();
+
+            Assert.False(tryCMat);
+            Assert.Empty(champ.Matches);
+
+        }
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+        public List<Team> TeamsMock(int amount)
+        {
+            foreach (var team in TeamsList)
+            {
+                team.AddPlayersList(PlayersList);
+            } 
+            return TeamsList.Take(amount).ToList();
+        }
         public List<Team> TeamsMock()
         {
             foreach (var team in TeamsList)
@@ -163,29 +288,6 @@ namespace Tests
                 team.AddPlayersList(PlayersList);
             } 
             return TeamsList;
-        }
-        public List<Match> MatchesMock()
-        {
-            var matchesList = new List<Match>{};
-
-            foreach (var team in TeamsList)
-            {
-                team.AddPlayersList(PlayersList);
-            }
-//          <~~~~~~~~~~~~~~~~{Creating Possible Matches}~~~~~~~~~~~~~~~~>
-            for (int i = 0; i < TeamsList.Count; i++)
-            { 
-                for (int j = 0 +i; j < TeamsList.Count; j++)
-                {
-                    if(i != j)
-                    {
-                        matchesList.Add(new Match(TeamsList[i], TeamsList[j]) );
-                    } 
-                }
-            }
-
-            return matchesList;
-            
         }
         public List<Team> TeamsList {get; set;} = new List<Team>{    
             new Team("Flasco"),

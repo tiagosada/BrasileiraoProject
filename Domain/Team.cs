@@ -37,11 +37,6 @@ namespace Domain
         }
         public bool RemovePlayer(Player Player)
         {
-            if (players.Count <= 16)
-            {
-                return false;
-            }
-
             players.Remove(Player);
             return true;
         }
