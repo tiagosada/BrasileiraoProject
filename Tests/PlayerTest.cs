@@ -3,14 +3,14 @@ using Domain;
 
 namespace Tests
 {
-    public class TeamPlayerTest
+    public class PlayerTest
     {
         [Fact]
-        public void Should_create_a_TeamPlayer()
+        public void Should_create_a_Player()
         {
             var name = "John";
 
-            var player = new TeamPlayer(name);
+            var player = new Player(name);
 
             Assert.Equal(name, player.Name);
             Assert.NotNull(player.Id);
@@ -21,7 +21,7 @@ namespace Tests
         {
             var name = "John";
 
-            var player = new TeamPlayer(name);
+            var player = new Player(name);
             player.GiveGoal();
 
             Assert.Equal(name, player.Name);
@@ -33,7 +33,7 @@ namespace Tests
         {
             var name = "John";
 
-            var player = new TeamPlayer(name);
+            var player = new Player(name);
             player.GiveGoal();
             player.GiveGoal();
             player.GiveGoal();
@@ -56,7 +56,7 @@ namespace Tests
         [InlineData(null)]
         public void should_return_false_when_invalid_name(string name)
         {
-            var player = new TeamPlayer(name);
+            var player = new Player(name);
 
             var isValid = player.ValidateName();
 
@@ -68,7 +68,7 @@ namespace Tests
         [InlineData("JONATHAN")]
         public void should_return_true_when_valid_name(string name)
         {
-            var player = new TeamPlayer(name);
+            var player = new Player(name);
 
             var isValid = player.ValidateName();
 
