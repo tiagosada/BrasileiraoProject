@@ -6,7 +6,7 @@ namespace Tests
 {
     public class ChampionshipTest
     {
-
+        [Fact]
         public void Should_Create_Championship()
         {
             
@@ -19,6 +19,7 @@ namespace Tests
             Assert.Equal(0, champ.Round);
             
         }
+        [Fact]
         public void Should_Register_User_CBF_on_Championship()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -31,6 +32,7 @@ namespace Tests
             Assert.True(champ.CurrentUser.CBF);
             Assert.NotNull(champ.CurrentUser.Id);
         }
+        [Fact]
         public void Should_Register_User_not_CBF_on_Championship()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -43,6 +45,7 @@ namespace Tests
             Assert.False(champ.CurrentUser.CBF);
             Assert.NotNull(champ.CurrentUser.Id);
         }
+        [Fact]
         public void Should_Register_User_not_CBF_on_Championship2()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -55,6 +58,7 @@ namespace Tests
             Assert.False(champ.CurrentUser.CBF);
             Assert.NotNull(champ.CurrentUser.Id);
         }
+        [Fact]
         public void Should_Register_Teams_on_Championship()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -70,6 +74,7 @@ namespace Tests
             Assert.Equal(TeamsMock().Count, champ.Teams.Count);
             Assert.True(tryRegist);
         }
+        [Fact]
         public void Should_not_Register_Teams_on_Championship_reason_not_CBF()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -85,6 +90,7 @@ namespace Tests
             Assert.Equal(0, champ.Teams.Count);
             Assert.False(tryRegist);
         }
+        [Fact]
         public void Should_not_Register_Teams_on_Championship_reason_Championship_Started()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -101,6 +107,7 @@ namespace Tests
             Assert.Equal(0, champ.Teams.Count);
             Assert.False(tryRegist);
         }
+        [Fact]
         public void Should_Register_Teams_on_Championship_and_add_a_Player()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -124,6 +131,7 @@ namespace Tests
             Assert.Equal(findedTeam.Players.Count+1, findedTeam.Players.Count);
             Assert.Equal("Leozim" , findedPlayer.Name);
         }
+        [Fact]
         public void Should_Register_Teams_on_Championship_and_not_add_a_Player_reason_no_CBF()
         {
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
