@@ -275,17 +275,17 @@ namespace Tests
 
         public List<Team> TeamsMock(int amount)
         {
-            foreach (var team in TeamsList)
+            for(int i = 0; i < TeamsList.Count; i++)
             {
-                team.AddPlayersList(PlayersList);
-            } 
+                TeamsList[i].AddPlayersList(PlayersList[i]);
+            }
             return TeamsList.Take(amount).ToList();
         }
         public List<Team> TeamsMock()
         {
-            foreach (var team in TeamsList)
+            for(int i = 0; i < TeamsList.Count; i++)
             {
-                team.AddPlayersList(PlayersList);
+                TeamsList[i].AddPlayersList(PlayersList[i]);
             } 
             return TeamsList;
         }
@@ -301,24 +301,199 @@ namespace Tests
             new Team("Barcelona"),
             new Team("Corintias")
         };
-        public List<Player> PlayersList {get; set;} = new List<Player>{
-            new Player("Omar"),
-            new Player("Matheus"),
-            new Player("Raul"),
-            new Player("Ruan"),
-            new Player("Max"),
-            new Player("Marcos"),
-            new Player("Maicon"),
-            new Player("Paulo"),
-            new Player("Leandro"),
-            new Player("Richardi"),
-            new Player("Lucas"),
-            new Player("John"),
-            new Player("Sergio"),
-            new Player("Kaka"),
-            new Player("Iago"),
-            new Player("Tiago"),
-        };
 
+        public List<List<Player>> PlayersList { get; set; } = new List<List<Player>>
+        {
+            new List<Player>
+            {
+                new Player("Omar"),
+                new Player("Matheus"),
+                new Player("Raul"),
+                new Player("Ruan"),
+                new Player("Max"),
+                new Player("Marcos"),
+                new Player("Maicon"),
+                new Player("Paulo"),
+                new Player("Leandro"),
+                new Player("Richardi"),
+                new Player("Lucas"),
+                new Player("John"),
+                new Player("Sergio"),
+                new Player("Kaka"),
+                new Player("Iago"),
+                new Player("Tiago"),
+            },
+            new List<Player>
+            {
+                new Player("Azul"),
+                new Player("Ateu"),
+                new Player("Abalado"),
+                new Player("Atunir"),
+                new Player("Aldair"),
+                new Player("Atum"),
+                new Player("Alcemar"),
+                new Player("Alcides"),
+                new Player("Alceu"),
+                new Player("Alcione"),
+                new Player("Among"),
+                new Player("Ajuju"),
+                new Player("Ajudante"),
+                new Player("Aberração"),
+                new Player("Arbitro"),
+                new Player("Ambito"),
+            },
+            new List<Player>
+            {
+                new Player("Bebe"),
+                new Player("Bernardo"),
+                new Player("Batman"),
+                new Player("Baiano"),
+                new Player("Bolacha"),
+                new Player("Biscoito"),
+                new Player("Bola"),
+                new Player("Bituca"),
+                new Player("Benjamim"),
+                new Player("Bartolomeu"),
+                new Player("Bento"),
+                new Player("Bolsonaro"),
+                new Player("Bemdez"),
+                new Player("Bobo"),
+                new Player("Babaca"),
+                new Player("Bozo"),    
+            },
+            new List<Player>
+            {
+                new Player("Carlos"),
+                new Player("Chico"),
+                new Player("Cabelo"),
+                new Player("Cabeludo"),
+                new Player("Coca"),
+                new Player("Cacau"),
+                new Player("Colombo"),
+                new Player("Cracudo"),
+                new Player("Cebola"),
+                new Player("Cicero"),
+                new Player("Cabeça"),
+                new Player("Cazuza"),
+                new Player("Cozido"),
+                new Player("Cazinha"),
+                new Player("Caco"),
+                new Player("CD"),
+            },
+            new List<Player>
+                {
+                new Player("Duda"),
+                new Player("Dondoca"),
+                new Player("Dafne"),
+                new Player("Dagmar"),
+                new Player("Dagoberto"),
+                new Player("Daisy"),
+                new Player("Dalbert"),
+                new Player("Dália"),
+                new Player("Dalila"),
+                new Player("Dalmiro"),
+                new Player("Dalton"),
+                new Player("Dalva"),
+                new Player("Damarina"),
+                new Player("Damasceno"),
+                new Player("Damiana"),
+                new Player("Damião"),
+            },
+            new List<Player>
+            {
+                new Player("Edberto"),
+                new Player("Edgar"),
+                new Player("Edite"),
+                new Player("Edmar"),
+                new Player("Edmundo"),
+                new Player("Eduardo"),
+                new Player("Edvaldo"),
+                new Player("Elaine"),
+                new Player("Elba"),
+                new Player("Eleazar"),
+                new Player("Ecléia"),
+                new Player("Edelmar"),
+                new Player("Edigenio"),
+                new Player("Edvige"),
+                new Player("Efraim"),
+                new Player("Elaine"),
+            },
+            new List<Player>
+            {
+                new Player("Fábio"),
+                new Player("Fauzi"),
+                new Player("Federico"),
+                new Player("Felicio"),
+                new Player("Feliciano"),
+                new Player("Felisbela"),
+                new Player("Felisberto"),
+                new Player("Félix"),
+                new Player("Ferdinando"),
+                new Player("Fernandes"),
+                new Player("Fidelino"),
+                new Player("Filadelfo"),
+                new Player("Felipe"),
+                new Player("Fileas"),
+                new Player("Filomeno"),
+                new Player("Filemom"),
+            },
+            new List<Player>
+            {
+                new Player("Gabriel"),
+                new Player("George"),
+                new Player("Gerson"),
+                new Player("Gideão"),
+                new Player("Gildo"),
+                new Player("Gonçalo"),
+                new Player("Guilherme"),
+                new Player("Gaspar"),
+                new Player("Geraldino"),
+                new Player("Gervásio"),
+                new Player("Gil"),
+                new Player("Godofredo"),
+                new Player("Gregório"),
+                new Player("Gustavo"),
+                new Player("Gastão"),
+                new Player("Golias"),
+            },
+            new List<Player>
+            {
+                new Player("Helberto"),
+                new Player("Henrique"),
+                new Player("Hamílcar"),
+                new Player("Hamilton"),
+                new Player("Haníbal"),
+                new Player("Harry"),
+                new Player("Hassan"),
+                new Player("Heriberto"),
+                new Player("Habib"),
+                new Player("Haidê"),
+                new Player("Haroldo"),
+                new Player("Hazael"),
+                new Player("Heitor"),
+                new Player("Hebe"),
+                new Player("Heladio"),
+                new Player("Helcio"),
+            },
+            new List<Player>
+            {
+                new Player("Wesley"),
+                new Player("Wellington"),
+                new Player("William"),
+                new Player("Wendel"),
+                new Player("Wagner"),
+                new Player("Wanderson"),
+                new Player("Wilson"),
+                new Player("Wallace"),
+                new Player("Washington"),
+                new Player("Winderson"),
+                new Player("Wanderley"),
+                new Player("Weverton"),
+                new Player("Wilton"),
+                new Player("Welton"),
+                new Player("Wilmar"),
+                new Player("Waldir"),
+            }
+        };
     }
 }
