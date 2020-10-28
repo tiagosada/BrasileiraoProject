@@ -15,6 +15,7 @@ namespace Domain
         public int Round {get; private set;} = 0;
         public IReadOnlyCollection<Team> Teams => teams;
         public User CurrentUser {get; private set;}
+        public int MatchesPerRounds {get; private set;}
 
 //     <~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[Register]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
@@ -97,9 +98,10 @@ namespace Domain
                     } 
                 }
             }
+            MatchesPerRounds = CalculateMatchesPerRounds();
             return true;
         }
-        public int RoundsNumber(List<Team> teams)
+        public int RoundsNumber()
         {
             var roundsNumber = 0;
             var totalMatches = (teams.Count * (teams.Count-1)) / 2;
@@ -108,11 +110,26 @@ namespace Domain
             {
                 if (totalMatches % i == 0)
                 {
-                    roundsNumber = totalMatches / i;
+                    roundsNumber = i;
                     break;
                 }
             } 
             return roundsNumber;
+        }
+        public int CalculateMatchesPerRounds()
+        {
+            var matchesPerRounds = 0;
+            var totalMatches = (teams.Count * (teams.Count-1)) / 2;
+           
+            for (int i = 10; i > 2; i--)
+            {
+                if (totalMatches % i == 0)
+                {
+                    matchesPerRounds = totalMatches / i;
+                    break;
+                }
+            } 
+            return matchesPerRounds;
         }
         public bool RoundGenerator()
         { 
@@ -124,18 +141,22 @@ namespace Domain
             {
                 return false;
             }
-            if (Matches.Count != RoundsNumber(teams))
+            if (Matches.Count % MatchesPerRounds != 0)
             {
                 return false;
             }
-            if (Round == RoundsNumber(teams))
+            if (Matches.Count == 0)
+            {
+                return false;
+            }
+            if (Round == RoundsNumber())
             {
                 return false;
             }
 
             var RoundMatches = new List<Match>();
             
-            for (int i = 0; i < Matches.Count/RoundsNumber(teams) ; i++)
+            for (int i = 0; i < MatchesPerRounds ; i++)
             {
                 var index = new Random().Next(Matches.Count);
                 RoundMatches.Add(Matches[index]);
@@ -158,7 +179,7 @@ namespace Domain
             {
                 return false;   
             }
-            if (Round > RoundsNumber(teams))
+            if (Round > RoundsNumber())
             {
                 return false;
             }

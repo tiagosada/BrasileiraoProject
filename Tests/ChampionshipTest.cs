@@ -271,6 +271,94 @@ namespace Tests
             Assert.Empty(champ.Matches);
 
         }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_Create_Matches_then_GenerateRound()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            var tryCMat = champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+
+            var tryGenerateRound = champ.RoundGenerator();
+
+            Assert.True(tryGenerateRound);
+            Assert.NotEmpty(champ.Rounds);
+            Assert.Equal(1, champ.Round);
+            Assert.Equal(40, champ.Matches.Count);
+        }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_Create_Matches_then_not_GenerateRound_reason_not_CBF()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            var tryCMat = champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            champ.RegisterUser("Ruan");
+            var tryGenerateRound = champ.RoundGenerator();
+
+            Assert.False(tryGenerateRound);
+            Assert.Empty(champ.Rounds);
+            Assert.Equal(45, champ.Matches.Count);
+        }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_Create_Matches_then_not_GenerateRound_reason_not_enough_teams()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock(7);
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            var tryCMat = champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var tryGenerateRound = champ.RoundGenerator();
+
+            Assert.False(tryGenerateRound);
+            Assert.Empty(champ.Rounds);
+        }
+        [Fact]
+        public void Should_Register_Teams_on_Championship_and_Create_Matches_then_not_GenerateRound_reason_not_enough_matches()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            var tryCMat = champ.CreateMatches();
+
+            champ.Matches.Remove(champ.Matches[0]);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var tryGenerateRound = champ.RoundGenerator();
+
+            Assert.False(tryGenerateRound);
+            Assert.Empty(champ.Rounds);
+        }
+        
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
         public List<Team> TeamsMock(int amount)
@@ -495,7 +583,5 @@ namespace Tests
                 new Player("Waldir"),
             }
         };
-//       salvando ? 
-// test 2
     }
 }
