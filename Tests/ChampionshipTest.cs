@@ -70,7 +70,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            var tryRegist = champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            var tryRegist = champ.RegisterTeams(teamsmock);
 
             Assert.False(champ.championshipStart);
             Assert.Equal(teamsmock.Count, champ.Teams.Count);
@@ -87,7 +87,7 @@ namespace Tests
             champ.RegisterUser("Tiago");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            var tryRegist = champ.RegisterTeams(champ.CurrentUser, TeamsMock());
+            var tryRegist = champ.RegisterTeams(TeamsMock());
 
             Assert.Equal(0, champ.Teams.Count);
             Assert.False(tryRegist);
@@ -104,7 +104,7 @@ namespace Tests
             champ.ChampionshipStart(champ.CurrentUser);     
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            var tryRegist = champ.RegisterTeams(champ.CurrentUser, TeamsMock());
+            var tryRegist = champ.RegisterTeams(TeamsMock());
 
             Assert.Equal(0, champ.Teams.Count);
             Assert.False(tryRegist);
@@ -119,19 +119,18 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Add Player to Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamId = champ.GetTeamIdByName("Flasco");
 
-            var tryAdd =champ.AddPlayer(champ.CurrentUser, new Player("Leozim"), teamId);
+            var tryAdd =champ.AddPlayer(new Player("Leozim"), teamId);
 
-            var playerId = champ.GetPlayerIdByName("Leozim", teamId);
-            var findedPlayer = champ.GetPlayerById(playerId, teamId);
-            var findedTeam = champ.GetTeamById(teamId);
+            var foundTeam = champ.GetTeamById(teamId);
+            var foundPlayer = foundTeam.GetPlayerById(foundTeam.GetPlayerIdByName("Leozim"));
             
             Assert.True(tryAdd);
-            Assert.Equal(17, findedTeam.Players.Count);
-            Assert.Equal("Leozim" , findedPlayer.Name);
+            Assert.Equal(17, foundTeam.Players.Count);
+            Assert.Equal("Leozim" , foundPlayer.Name);
         }
         [Fact]
         public void Should_Register_Teams_on_Championship_and_not_add_a_Player_reason_no_CBF()
@@ -143,18 +142,16 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterTeams(champ.CurrentUser, TeamsMock());
+            champ.RegisterTeams(TeamsMock());
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Add Player to Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamId = champ.GetTeamIdByName("Flasco");
+            var foundTeam = champ.GetTeamById(teamId);
+            champ.RegisterUser("Godofredo");
 
-            champ.RegisterUser("Léo");
-
-            var tryAdd = champ.AddPlayer(champ.CurrentUser, new Player("Leozim"), teamId);
-
-            var findedTeam = champ.GetTeamById(teamId);
+            var tryAdd = champ.AddPlayer(new Player("Leozim"), teamId);
             
-            Assert.Equal(16, findedTeam.Players.Count);
             Assert.False(tryAdd);
+            Assert.Equal(16, foundTeam.Players.Count);
         }
         [Fact]
         public void Should_Register_Teams_on_Championship_and_remove_a_Player()
@@ -166,21 +163,19 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Remove Player of Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamId = champ.GetTeamIdByName("Flasco");
 
-            var playerId = champ.GetPlayerIdByName("Marcos", teamId);
-            var findedPlayer = champ.GetPlayerById(playerId, teamId);
+            var foundTeam = champ.GetTeamById(teamId);
+            var foundPlayer = foundTeam.GetPlayerById(foundTeam.GetPlayerIdByName("Iago"));
             
 
-            var tryRemove = champ.RemovePlayer(champ.CurrentUser, findedPlayer, teamId);
-
-            var findedTeam = champ.GetTeamById(teamId);
+            var tryRemove = champ.RemovePlayer(foundPlayer, teamId);
             
             Assert.True(tryRemove);
-            Assert.Equal(15, findedTeam.Players.Count);
-            Assert.DoesNotContain(findedPlayer , findedTeam.Players);
+            Assert.Equal(15, foundTeam.Players.Count);
+            Assert.DoesNotContain(foundPlayer , foundTeam.Players);
         }
         [Fact]
         public void Should_Register_Teams_on_Championship_and_not_remove_a_Player_reason_not_CBF()
@@ -192,22 +187,20 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Remove Player of Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamId = champ.GetTeamIdByName("Flasco");
 
-            var playerId = champ.GetPlayerIdByName("Marcos", teamId);
-            var findedPlayer = champ.GetPlayerById(playerId, teamId);
+            var foundTeam = champ.GetTeamById(teamId);
+            var foundPlayer = foundTeam.GetPlayerById(foundTeam.GetPlayerIdByName("Tiago"));
             
             champ.RegisterUser("Leandro");
 
-            var tryRemove = champ.RemovePlayer(champ.CurrentUser, findedPlayer, teamId);
-
-            var findedTeam = champ.GetTeamById(teamId);
+            var tryRemove = champ.RemovePlayer(foundPlayer, teamId);
             
             Assert.False(tryRemove);
-            Assert.Equal(16, findedTeam.Players.Count);
-            Assert.Contains(findedPlayer , findedTeam.Players);
+            Assert.Equal(16, foundTeam.Players.Count);
+            Assert.Contains(foundPlayer , foundTeam.Players);
         }
 
 //      <-----------------------------------[Matches Test]------------------------------------------------> 
@@ -222,7 +215,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
             var tryCMat = champ.CreateMatches();
 
@@ -242,7 +235,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
             champ.RegisterUser("Leandro");
 
@@ -263,7 +256,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock(7);
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
             var tryCMat = champ.CreateMatches();
 
@@ -282,7 +275,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
             var tryCMat = champ.CreateMatches();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
@@ -305,7 +298,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
             var tryCMat = champ.CreateMatches();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
@@ -327,7 +320,7 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock(7);
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
             var tryCMat = champ.CreateMatches();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
@@ -347,10 +340,9 @@ namespace Tests
             champ.RegisterUser("Tiago", "Pa$Sw0rD");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
-            champ.RegisterTeams(champ.CurrentUser, teamsmock);
+            champ.RegisterTeams(teamsmock);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
             var tryCMat = champ.CreateMatches();
-
             champ.Matches.Remove(champ.Matches[0]);
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var tryGenerateRound = champ.RoundGenerator();
