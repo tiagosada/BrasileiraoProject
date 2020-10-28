@@ -13,6 +13,7 @@ namespace Domain
         public List<Round> Rounds { get; private set; } = new List<Round>();
         private List<Team> teams { get; set; } = new List<Team>();
         public int Round {get; private set;} = 0;
+        public bool RoundStarted {get; private set;} = false;
         public IReadOnlyCollection<Team> Teams => teams;
         public User CurrentUser {get; private set;}
         public int MatchesPerRounds {get; private set;}
@@ -28,7 +29,7 @@ namespace Domain
             CurrentUser = new User(name);
         }
 
-        public bool RegisterTeams(User user, List<Team> newteams)
+        public bool RegisterTeams(List<Team> newteams)
         {
             if(!CurrentUser.CBF)
             {
@@ -43,7 +44,7 @@ namespace Domain
             teams = newteams;
             return true;
         }
-        public bool RemovePlayer(User user, Player player, Guid IdTeam)
+        public bool RemovePlayer(Player player, Guid IdTeam)
         {
             if(!CurrentUser.CBF)
             {
@@ -58,7 +59,7 @@ namespace Domain
             return true;
         }
 
-        public bool AddPlayer(User user, Player player, Guid IdTeam)
+        public bool AddPlayer(Player player, Guid IdTeam)
         {
             if(!CurrentUser.CBF)
             {
@@ -169,29 +170,25 @@ namespace Domain
             return true;
         }
 
-        public bool playRound(User user)
+        public bool SetMatchResult(List<string> HplayerGoals, List<string> VplayerGoals)
         {
             if(!CurrentUser.CBF)
             {
                 return false;
             }
-            if (Rounds.Count.Equals(0))
-            {
-                return false;   
-            }
-            if (Round > RoundsNumber())
-            {
-                return false;
-            }
+            
 
             var CurrentRound = Rounds.First( round => round.PlayedRound == false);
             
-            foreach (var match in CurrentRound.Matches)
-            {
-               match.PlayMatch();
-            }
+            var CurrentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );
             
-            CurrentRound.PlayedRound = true;
+            CurrentMatch.PlayMatch(HplayerGoals, VplayerGoals);
+
+
+            if (CurrentRound.Matches.All(match => match.VisitingTeamGoals != null))
+            {
+                CurrentRound.PlayedRound = true;
+            }
             return true;
         }
         public bool ChampionshipStart(User user)
@@ -254,18 +251,7 @@ namespace Domain
 
             return MatchesResult;
         }
-        public Player GetPlayerById(Guid playerId, Guid teamId)
-        {
-            var findedTeam = GetTeamById(teamId);
-
-            return findedTeam.Players.First(player => player.Id == playerId);
-        }
-        public Guid GetPlayerIdByName(string playerName, Guid teamId)
-        {
-            var findedTeam = GetTeamById(teamId);
-
-            return findedTeam.Players.First(player => player.Name == playerName).Id;
-        }
+       
         public Team GetTeamById(Guid teamId)
         {
             return Teams.First(team => team.Id == teamId);

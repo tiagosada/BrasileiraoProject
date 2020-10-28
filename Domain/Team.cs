@@ -22,10 +22,6 @@ namespace Domain
             TeamName = name;
             players = playerslist;     
         }
-         public Guid GetPlayerIdByName(string name)
-        {
-            return players.First(x => x.Name == name).Id;
-        }
         public bool AddPlayer(Player Player)
         {
             if (players.Count >= 32 )
@@ -50,13 +46,13 @@ namespace Domain
             this.players.AddRange(Players);
             return true;
         }
-        public void ScoreAGoal()
+        public Player GetPlayerById(Guid playerId)
         {
-            Table.ScoreMakedGoals();
-            
-            var random = new Random().Next(players.Count);
-            players[random].GiveGoal();
-            
+            return Players.First(player => player.Id == playerId);
+        }
+        public Guid GetPlayerIdByName(string playerName)
+        {
+            return Players.First(player => player.Name == playerName).Id;
         }
     }
 }

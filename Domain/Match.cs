@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -9,6 +10,7 @@ namespace Domain
         public Team VisitingTeam { get; private set; }
         public int? HomeTeamGoals { get; private set; }
         public int? VisitingTeamGoals { get; private set; }
+        
 
         public Match(Team team1, Team team2)
         {
@@ -16,21 +18,32 @@ namespace Domain
            this.VisitingTeam = team2;
 
         }
-        public void PlayMatch()
+        public void PlayMatch( List<string> HplayerNames, List<string> VplayerNames)
         {
-            var rand = new Random();
-            var HomeGoals = rand.Next(4);
-            var VisitingGoals = rand.Next(4);
+            HomeTeamGoals = 0; VisitingTeamGoals = 0; 
 
-            ScoreGoalsHomeTeam(HomeGoals);
-            ScoreGoalsVisitingTeam(VisitingGoals);
+            foreach (var name in HplayerNames)
+            {
+                var HomePlayer = HomeTeam.GetPlayerById(HomeTeam.GetPlayerIdByName(name) );
+                HomePlayer.GiveGoal();
+                ScoreGoalHomeTeam();
+            }
 
-            if (HomeGoals > VisitingGoals)
+             
+            
+            foreach (var name in VplayerNames)
+            {
+                var VisitingPlayer = VisitingTeam.GetPlayerById(VisitingTeam.GetPlayerIdByName(name) );
+                VisitingPlayer.GiveGoal();
+                ScoreGoalVisitingTeam();
+            }
+
+            if (HomeTeamGoals > VisitingTeamGoals)
             {
                 HomeTeam.Table.ScoreWin();
                 VisitingTeam.Table.ScoreDefeat();
             }
-            else if (HomeGoals < VisitingGoals)
+            else if (HomeTeamGoals < VisitingTeamGoals)
             {
                 VisitingTeam.Table.ScoreWin();
                 HomeTeam.Table.ScoreDefeat();
@@ -41,45 +54,19 @@ namespace Domain
                 HomeTeam.Table.ScoreDraw();
             }
         }
-        public void PlayMatch(int homeGoals, int visitingGoals)
-        {   
-            ScoreGoalsHomeTeam(homeGoals);
-            ScoreGoalsVisitingTeam(visitingGoals);
-
-            if (homeGoals > visitingGoals)
-            {
-                HomeTeam.Table.ScoreWin();
-                VisitingTeam.Table.ScoreDefeat();
-            }
-            else if (homeGoals < visitingGoals)
-            {
-                VisitingTeam.Table.ScoreWin();
-                HomeTeam.Table.ScoreDefeat();
-            }
-            else
-            {
-                VisitingTeam.Table.ScoreDraw();
-                HomeTeam.Table.ScoreDraw();
-            }
-        }
-        public void ScoreGoalsHomeTeam(int goal)
+        
+        public void ScoreGoalHomeTeam()
         {
-            HomeTeamGoals = goal;
-            for (int i = 0; i < goal; i++)
-            {
-                HomeTeam.ScoreAGoal();
-                VisitingTeam.Table.ScoreConcededGoals();
-            }
+            HomeTeamGoals++;
+            HomeTeam.Table.ScoreMakedGoals();
+            VisitingTeam.Table.ScoreConcededGoals();
         }
 
-        public void ScoreGoalsVisitingTeam(int goal)
+        public void ScoreGoalVisitingTeam()
         {
-            VisitingTeamGoals = goal;
-            for (int i = 0; i < goal; i++)
-            {
-                VisitingTeam.ScoreAGoal();
-                HomeTeam.Table.ScoreConcededGoals();
-            }
+            VisitingTeamGoals++;
+            VisitingTeam.Table.ScoreMakedGoals();
+            HomeTeam.Table.ScoreConcededGoals();
         }
     }
 }
