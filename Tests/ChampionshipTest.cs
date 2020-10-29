@@ -350,9 +350,78 @@ namespace Tests
             Assert.False(tryGenerateRound);
             Assert.Empty(champ.Rounds);
         }
-        
-//      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_and_CreateMatches_GenerateRound_then_SetMatchResult()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
 
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat = champ.FindCurrentMatch();
+            var vScorerList = currentmat.VisitingTeam.Players.Take(3);
+            var hScorerList = currentmat.HomeTeam.Players.Take(4);
+            var vScorerNamesList = new List<string>();
+            var hScorerNamesList = new List<string>();
+            
+            foreach (var Scorer in vScorerList)
+            {
+                vScorerNamesList.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList)
+            {
+                hScorerNamesList.Add(Scorer.Name);
+            }
+
+            var tryStMatReslt = champ.SetMatchResult(hScorerNamesList, vScorerNamesList);
+
+       //   testando resultados
+
+       //   HomeTeam test
+            Assert.Equal(4, currentmat.HomeTeamGoals);
+            Assert.Equal(4, currentmat.HomeTeam.Table.MakedGoals);
+            Assert.Equal(3, currentmat.HomeTeam.Table.ConcededGoals);
+            Assert.Equal(1, currentmat.HomeTeam.Table.Wins);
+            Assert.Equal(0, currentmat.HomeTeam.Table.Defeats);
+            Assert.Equal(0, currentmat.HomeTeam.Table.Draws);
+            Assert.Equal(3, currentmat.HomeTeam.Table.Score);
+
+            // Players Score test
+            foreach (var player in hScorerList)
+            {
+                Assert.Equal(1, player.Goals);
+            }
+       //   VisistingTeam test
+            Assert.Equal(3, currentmat.VisitingTeamGoals);
+            Assert.Equal(3, currentmat.VisitingTeam.Table.MakedGoals);
+            Assert.Equal(4, currentmat.VisitingTeam.Table.ConcededGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.Wins);
+            Assert.Equal(1, currentmat.VisitingTeam.Table.Defeats);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.Draws);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.Score);
+
+            // Players Score test
+            foreach (var player in vScorerList)
+            {
+                Assert.Equal(1, player.Goals);
+            }
+
+        }
+
+//      |  
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+//      |
         public List<Team> TeamsMock(int amount)
         {
             for(int i = 0; i < TeamsList.Count; i++)
@@ -575,5 +644,6 @@ namespace Tests
                 new Player("Waldir"),
             }
         };
+        
     }
 }

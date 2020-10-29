@@ -10,6 +10,7 @@ namespace Domain
 
         public bool championshipStart {get; protected set; } = false;
         public List<Match> Matches { get; private set; } = new List<Match>();
+        public Match CurrentMatch { get; private set; }
         public List<Round> Rounds { get; private set; } = new List<Round>();
         private List<Team> teams { get; set; } = new List<Team>();
         public int Round {get; private set;} = 0;
@@ -169,6 +170,19 @@ namespace Domain
 
             return true;
         }
+        public Match FindCurrentMatch()
+        {
+            if(!CurrentUser.CBF)
+            {
+                return null;
+            }
+            
+
+            var CurrentRound = Rounds.First( round => round.PlayedRound == false);
+            
+            return CurrentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );            
+        }
+
 
         public bool SetMatchResult(List<string> HplayerGoals, List<string> VplayerGoals)
         {
