@@ -54,6 +54,13 @@ namespace Domain
                 HomeTeam.Table.ScoreDraw();
             }
         }
+        public void PlayMatch()
+        {
+            HomeTeamGoals = 0; VisitingTeamGoals = 0;
+            VisitingTeam.Table.ScoreDraw();
+            HomeTeam.Table.ScoreDraw();
+            
+        }
         
         public void ScoreGoalHomeTeam()
         {

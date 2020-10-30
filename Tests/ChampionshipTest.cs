@@ -418,6 +418,50 @@ namespace Tests
             }
 
         }
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_and_CreateMatches_GenerateRound_then_SetMatchResult_Draw()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat = champ.FindCurrentMatch();
+
+            var tryStMatReslt = champ.SetMatchResult();
+
+       //   testando resultados
+
+       //   HomeTeam test
+            Assert.Equal(0, currentmat.HomeTeamGoals);
+            Assert.Equal(0, currentmat.HomeTeam.Table.MakedGoals);
+            Assert.Equal(0, currentmat.HomeTeam.Table.ConcededGoals);
+            Assert.Equal(0, currentmat.HomeTeam.Table.Wins);
+            Assert.Equal(0, currentmat.HomeTeam.Table.Defeats);
+            Assert.Equal(1, currentmat.HomeTeam.Table.Draws);
+            Assert.Equal(1, currentmat.HomeTeam.Table.Score);
+
+       //   VisistingTeam test
+            Assert.Equal(0, currentmat.VisitingTeamGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.MakedGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.ConcededGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.Wins);
+            Assert.Equal(0, currentmat.VisitingTeam.Table.Defeats);
+            Assert.Equal(1, currentmat.VisitingTeam.Table.Draws);
+            Assert.Equal(1, currentmat.VisitingTeam.Table.Score);
+
+        }
 
 //      |  
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>

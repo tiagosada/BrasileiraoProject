@@ -194,9 +194,30 @@ namespace Domain
 
             var CurrentRound = Rounds.First( round => round.PlayedRound == false);
             
-            var CurrentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );
+            var currentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );
             
-            CurrentMatch.PlayMatch(HplayerGoals, VplayerGoals);
+            currentMatch.PlayMatch(HplayerGoals, VplayerGoals);
+
+
+            if (CurrentRound.Matches.All(match => match.VisitingTeamGoals != null))
+            {
+                CurrentRound.PlayedRound = true;
+            }
+            return true;
+        }
+        public bool SetMatchResult()
+        {
+            if(!CurrentUser.CBF)
+            {
+                return false;
+            }
+            
+
+            var CurrentRound = Rounds.First( round => round.PlayedRound == false);
+            
+            var currentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );
+            
+            currentMatch.PlayMatch();
 
 
             if (CurrentRound.Matches.All(match => match.VisitingTeamGoals != null))
