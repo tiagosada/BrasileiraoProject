@@ -463,6 +463,166 @@ namespace Tests
 
         }
 
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_CreateMatches_GenerateRound_SetMatchResult_then_takeTable()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat = champ.FindCurrentMatch();
+            var vScorerList = currentmat.VisitingTeam.Players.Take(3);
+            var hScorerList = currentmat.HomeTeam.Players.Take(4);
+            var vScorerNamesList = new List<string>();
+            var hScorerNamesList = new List<string>();
+            
+            foreach (var Scorer in vScorerList)
+            {
+                vScorerNamesList.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList)
+            {
+                hScorerNamesList.Add(Scorer.Name);
+            }
+
+            var tryStMatReslt = champ.SetMatchResult(hScorerNamesList, vScorerNamesList);
+
+       //   testando resultados
+
+       //   HomeTeam test
+            var orderedTeams = champ.DisplayTable();
+            
+            Assert.Equal(currentmat.HomeTeam.TeamName, orderedTeams[0].TeamName);
+            Assert.Equal(4, orderedTeams[0].Table.MakedGoals);
+            Assert.Equal(3, orderedTeams[0].Table.ConcededGoals);
+            Assert.Equal(1, orderedTeams[0].Table.Wins);
+            Assert.Equal(0, orderedTeams[0].Table.Defeats);
+            Assert.Equal(0, orderedTeams[0].Table.Draws);
+            Assert.Equal(3, orderedTeams[0].Table.Score);
+
+       //   VisistingTeam test
+            Assert.Equal(currentmat.VisitingTeam.TeamName, orderedTeams[orderedTeams.Count-1].TeamName);
+            Assert.Equal(3, orderedTeams[orderedTeams.Count-1].Table.MakedGoals);
+            Assert.Equal(4, orderedTeams[orderedTeams.Count-1].Table.ConcededGoals);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Wins);
+            Assert.Equal(1, orderedTeams[orderedTeams.Count-1].Table.Defeats);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Draws);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Score);
+
+            // Players Score test
+            foreach (var player in vScorerList)
+            {
+                Assert.Equal(1, player.Goals);
+            }
+
+        }
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_CreateMatches_GenerateRound_SetMatchResult_twice_then_takeTable()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat = champ.FindCurrentMatch();
+            var vScorerList = currentmat.VisitingTeam.Players.Take(3);
+            var hScorerList = currentmat.HomeTeam.Players.Take(4);
+            var vScorerNamesList = new List<string>();
+            var hScorerNamesList = new List<string>();
+            
+            foreach (var Scorer in vScorerList)
+            {
+                vScorerNamesList.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList)
+            {
+                hScorerNamesList.Add(Scorer.Name);
+            }
+
+            var tryStMatReslt = champ.SetMatchResult(hScorerNamesList, vScorerNamesList);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result2]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat2 = champ.FindCurrentMatch();
+            var vScorerList2 = currentmat2.VisitingTeam.Players.Take(1);
+            var hScorerList2 = currentmat2.HomeTeam.Players.Take(1);
+            var vScorerNamesList2 = new List<string>();
+            var hScorerNamesList2 = new List<string>();
+            
+            foreach (var Scorer in vScorerList2)
+            {
+                vScorerNamesList2.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList2)
+            {
+                hScorerNamesList2.Add(Scorer.Name);
+            }
+
+            var tryStMatReslt2 = champ.SetMatchResult(hScorerNamesList2, vScorerNamesList2);
+
+//   testando resultados
+
+       //   HomeTeam test
+            var orderedTeams = champ.DisplayTable();
+            
+            Assert.Equal(currentmat.HomeTeam.TeamName, orderedTeams[0].TeamName);
+            Assert.Equal(4, orderedTeams[0].Table.MakedGoals);
+            Assert.Equal(3, orderedTeams[0].Table.ConcededGoals);
+            Assert.Equal(1, orderedTeams[0].Table.Wins);
+            Assert.Equal(0, orderedTeams[0].Table.Defeats);
+            Assert.Equal(0, orderedTeams[0].Table.Draws);
+            Assert.Equal(3, orderedTeams[0].Table.Score);
+
+       //   VisistingTeam test
+            Assert.Equal(currentmat.VisitingTeam.TeamName, orderedTeams[orderedTeams.Count-1].TeamName);
+            Assert.Equal(3, orderedTeams[orderedTeams.Count-1].Table.MakedGoals);
+            Assert.Equal(4, orderedTeams[orderedTeams.Count-1].Table.ConcededGoals);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Wins);
+            Assert.Equal(1, orderedTeams[orderedTeams.Count-1].Table.Defeats);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Draws);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Score);
+        
+        //   HomeTeam2 test
+            Assert.Equal(currentmat2.HomeTeam.TeamName, orderedTeams[1].TeamName);
+            Assert.Equal(1, orderedTeams[1].Table.MakedGoals);
+            Assert.Equal(1, orderedTeams[1].Table.ConcededGoals);
+            Assert.Equal(0, orderedTeams[1].Table.Wins);
+            Assert.Equal(0, orderedTeams[1].Table.Defeats);
+            Assert.Equal(1, orderedTeams[1].Table.Draws);
+            Assert.Equal(1, orderedTeams[1].Table.Score);
+
+       //   VisistingTeam2 test
+            Assert.Equal(currentmat2.VisitingTeam.TeamName, orderedTeams[2].TeamName);
+            Assert.Equal(1, orderedTeams[2].Table.MakedGoals);
+            Assert.Equal(1, orderedTeams[2].Table.ConcededGoals);
+            Assert.Equal(0, orderedTeams[2].Table.Wins);
+            Assert.Equal(0, orderedTeams[2].Table.Defeats);
+            Assert.Equal(1, orderedTeams[2].Table.Draws);
+            Assert.Equal(1, orderedTeams[2].Table.Score);
+
+        }
 //      |  
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 //      |

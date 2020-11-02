@@ -5,13 +5,13 @@ namespace Domain
     public class TeamStatistics 
     {
         public int Score { get; private set;}
+        public int ConcededGoals { get; private set;} 
+        public int MakedGoals { get; private set;}
+        public int GoalsDifference { get; private set;} 
         public int PlayedMatchs { get; private set;} 
         public int Wins { get; private set; } 
         public int Defeats { get; private set; }   
         public int Draws { get; private set;} 
-        public int MakedGoals { get; private set;}
-        public int ConcededGoals { get; private set;} 
-        public int GoalsDifference { get; private set;} 
         public double Rate { get; private set;} = 0.0;
 
       
