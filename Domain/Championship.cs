@@ -253,50 +253,9 @@ namespace Domain
         }
         public List<Team> DisplayTable()
         {
-            var TeamOrdered = teams.OrderByDescending(x => x.Table.Score).ToList();
-            for (int j = 0; j < TeamOrdered.Count; j++)
-            {
-                for (int i = 0; i < TeamOrdered.Count-1; i++)
-                {
-                    if (TeamOrdered[i].Table.Score == TeamOrdered[i+1].Table.Score)
-                    {
-                        if (TeamOrdered[i].Table.Wins == TeamOrdered[i+1].Table.Wins)
-                        {
-                            if (TeamOrdered[i].Table.GoalsDifference == TeamOrdered[i+1].Table.GoalsDifference)
-                            {
-                                if (TeamOrdered[i].Table.MakedGoals == TeamOrdered[i+1].Table.MakedGoals)
-                                {
-                                    if (TeamOrdered[i].Table.PlayedMatchs < TeamOrdered[i+1].Table.PlayedMatchs)
-                                    {
-                                        var temp = TeamOrdered[i];
-                                        TeamOrdered[i] = TeamOrdered[i+1];
-                                        TeamOrdered[i+1] = temp;
-                                    }
-                                }
-                                else if (TeamOrdered[i].Table.MakedGoals < TeamOrdered[i+1].Table.MakedGoals)
-                                {
-                                    var temp = TeamOrdered[i];
-                                    TeamOrdered[i] = TeamOrdered[i+1];
-                                    TeamOrdered[i+1] = temp;
-                                }
-                            }
-                            else if (TeamOrdered[i].Table.GoalsDifference < TeamOrdered[i+1].Table.GoalsDifference)
-                            {
-                                var temp = TeamOrdered[i];
-                                TeamOrdered[i] = TeamOrdered[i+1];
-                                TeamOrdered[i+1] = temp;
-                            }
-                        }
-                        else if (TeamOrdered[i].Table.Wins < TeamOrdered[i+1].Table.Wins)
-                        {
-                            var temp = TeamOrdered[i];
-                            TeamOrdered[i] = TeamOrdered[i+1];
-                            TeamOrdered[i+1] = temp;
-                        }
-                    }
-                }
-            }
-            return TeamOrdered;
+            var TeamOrdered = teams.OrderByDescending(x => x.Table.Score).ThenByDescending(x => x.Table.GoalsDifference).ThenByDescending(x => x.Table.MakedGoals);
+            
+            return TeamOrdered.ToList();
 
         }
         public List<Team> QualifiedTeams()
