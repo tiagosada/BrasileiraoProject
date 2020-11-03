@@ -176,11 +176,15 @@ namespace Domain
             {
                 return null;
             }
-            
 
-            var CurrentRound = Rounds.First( round => round.PlayedRound == false);
-            
-            return CurrentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );            
+            var CurrentRound = Rounds.FirstOrDefault( round => round.PlayedRound == false);
+            if (CurrentRound == null)
+            {
+                return null;
+            }
+            CurrentMatch = CurrentRound.Matches.FirstOrDefault( match => match.VisitingTeamGoals == null );
+
+            return CurrentMatch;          
         }
 
 
@@ -189,12 +193,18 @@ namespace Domain
             if(!CurrentUser.CBF)
             {
                 return false;
-            }
-            
+            }   
 
-            var CurrentRound = Rounds.First( round => round.PlayedRound == false);
-            
-            var currentMatch = CurrentRound.Matches.First( match => match.VisitingTeamGoals == null );
+            var CurrentRound = Rounds.FirstOrDefault( round => round.PlayedRound == false);
+            if (CurrentRound == null)
+            {
+                return false;
+            }
+            var currentMatch = CurrentRound.Matches.FirstOrDefault( match => match.VisitingTeamGoals == null );
+            if (currentMatch == null)
+            {
+                return false;
+            }
             
             currentMatch.PlayMatch(HplayerGoals, VplayerGoals);
 
@@ -283,7 +293,6 @@ namespace Domain
                     MatchesResult.AddRange(round.Matches);
                 }
             }
-
             return MatchesResult;
         }
        

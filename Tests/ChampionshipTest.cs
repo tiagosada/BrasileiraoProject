@@ -2,6 +2,7 @@ using Xunit;
 using Domain;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Tests
 {
@@ -585,7 +586,179 @@ namespace Tests
             Assert.True(tryStMatReslt2);
         }
 //      |  
-//      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_CreateMatches_GenerateRound_SetMatchResult_then_takeTopScorer()
+        {
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var champ = new Championship();
+
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Register Matches]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            champ.CreateMatches();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Generate Round]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat = champ.FindCurrentMatch();
+            var vScorerList = currentmat.VisitingTeam.Players.Take(2);
+            var hScorerList = currentmat.HomeTeam.Players.Take(1);
+            var vScorerNamesList = new List<string>();
+            var hScorerNamesList = new List<string>();
+            
+            foreach (var Scorer in vScorerList)
+            {
+                vScorerNamesList.Add(Scorer.Name);
+            }
+            foreach (var Scorer in vScorerList)
+            {
+                vScorerNamesList.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList)
+            {
+                hScorerNamesList.Add(Scorer.Name);
+            }
+
+            var tryStMatReslt = champ.SetMatchResult(hScorerNamesList, vScorerNamesList);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result2]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+       //   criando partida controlada  
+            var currentmat2 = champ.FindCurrentMatch();
+            var vScorerList2 = currentmat2.VisitingTeam.Players.Take(1);
+            var hScorerList2 = currentmat2.HomeTeam.Players.Take(1);
+            var vScorerNamesList2 = new List<string>();
+            var hScorerNamesList2 = new List<string>();
+            
+            foreach (var Scorer in vScorerList2)
+            {
+                vScorerNamesList2.Add(Scorer.Name);
+            }
+            foreach (var Scorer in vScorerList2)
+            {
+                vScorerNamesList2.Add(Scorer.Name);
+            }
+            foreach (var Scorer in vScorerList2)
+            {
+                vScorerNamesList2.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList2)
+            {
+                hScorerNamesList2.Add(Scorer.Name);
+            }
+            foreach (var Scorer in hScorerList2)
+            {
+                hScorerNamesList2.Add(Scorer.Name);
+            }
+
+            var tryStMatReslt2 = champ.SetMatchResult(hScorerNamesList2, vScorerNamesList2);
+//      <~~~~~~~~~~~~~~~~~~~~~~~[getting top scorer]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>      
+
+            var topScorer = champ.GetTopScorers();
+
+            for(int i = 0; i < topScorer.Count-1; i++)
+            {
+                Assert.True(topScorer[i].Goals >= topScorer[i+1].Goals);
+            }
+        }
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_and_CreateMatches_GenerateRound_then_SetMatchResult_till_last_match()
+        {
+            var champ = new Championship();
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+            champ.CreateMatches();
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result1]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            foreach (var match in champ.Matches)
+            {
+                var currentmat = champ.FindCurrentMatch();
+                if (currentmat == null)
+                {
+                    break;
+                }
+                var vScorerList = currentmat.VisitingTeam.Players.Take(1).ToList();
+                var hScorerList = currentmat.HomeTeam.Players.Take(1).ToList();
+                var vScorerNamesList = new List<string>();
+                var hScorerNamesList = new List<string>();
+                
+                var rand = new Random().Next(5);
+                for (int i = 0; i < rand; i++)
+                {
+                    vScorerNamesList.Add(vScorerList[0].Name);
+                }
+                for (int i = 0; i < rand; i++)
+                {
+                    hScorerNamesList.Add(hScorerList[0].Name);
+                }
+
+                champ.SetMatchResult(hScorerNamesList, vScorerNamesList);
+
+            }
+
+            var qualified = champ.QualifiedTeams();
+
+            for(int i = 0; i < 3; i++)
+            {
+                Assert.True(qualified[i].Table.Score >= qualified[i+1].Table.Score);
+            }
+
+            var unqualified = champ.DisqualifiedTeams();
+
+            for(int i = 0; i < 4; i++)
+            {
+                Assert.True(qualified[3].Table.Score >= unqualified[i].Table.Score);
+            }
+        }
+        [Fact]
+        public void Should_RegisterTeams_on_Championship_and_CreateMatches_GenerateRound_then_SetMatchResult_ShowMatchesResult()
+        {
+            var champ = new Championship();
+            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            var teamsmock = TeamsMock();
+            champ.RegisterTeams(teamsmock);
+            champ.CreateMatches();
+            champ.RoundGenerator();
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Set Match Result1]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>           
+            for (int j = 0; j < champ.Matches.Count; j++)
+            {
+                var currentmat = champ.FindCurrentMatch();
+                if (currentmat == null)
+                {
+                    break;
+                }
+                var vScorerList = currentmat.VisitingTeam.Players.Take(1).ToList();
+                var hScorerList = currentmat.HomeTeam.Players.Take(1).ToList();
+                var vScorerNamesList = new List<string>();
+                var hScorerNamesList = new List<string>();
+                
+                var rand = new Random().Next(5);
+                for (int i = 0; i < rand; i++)
+                {
+                    vScorerNamesList.Add(vScorerList[0].Name);
+                }
+                for (int i = 0; i < rand; i++)
+                {
+                    hScorerNamesList.Add(hScorerList[0].Name);
+                }
+
+                champ.SetMatchResult(hScorerNamesList, vScorerNamesList);
+
+            }
+
+            var results = champ.ShowResultRound();
+            
+            foreach (var match in results)
+            {
+                Assert.True(match.VisitingTeamGoals >= 0);
+            }
+        }
+//      |  
+//      <~~~~~~~~~~~~~~~~~~~~~~~[Mockings]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 //      |
         public List<Team> TeamsMock(int amount)
         {
