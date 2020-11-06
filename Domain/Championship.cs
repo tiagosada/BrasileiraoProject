@@ -32,6 +32,7 @@ namespace Domain
 
         public bool RegisterTeams(List<Team> newteams)
         {
+            //if(CurrentUser.Profile != 0) (WebAPI)
             if(!CurrentUser.CBF)
             {
                 return false;
