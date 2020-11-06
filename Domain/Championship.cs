@@ -104,7 +104,7 @@ namespace Domain
             MatchesPerRounds = CalculateMatchesPerRounds();
             return true;
         }
-        public int RoundsNumber()
+        private int RoundsNumber()
         {
             var roundsNumber = 0;
             var totalMatches = (teams.Count * (teams.Count-1)) / 2;
@@ -119,7 +119,7 @@ namespace Domain
             } 
             return roundsNumber;
         }
-        public int CalculateMatchesPerRounds()
+        private int CalculateMatchesPerRounds()
         {
             var matchesPerRounds = 0;
             var totalMatches = (teams.Count * (teams.Count-1)) / 2;
@@ -283,7 +283,7 @@ namespace Domain
             return TeamOrdered.TakeLast(4).ToList();
 
         }    
-        public List<Match> ShowResultRound()
+        public List<Match> ShowRoundResult()
         {
             var MatchesResult = new List<Match>();
 

@@ -750,7 +750,7 @@ namespace Tests
 
             }
 
-            var results = champ.ShowResultRound();
+            var results = champ.ShowRoundResult();
             
             foreach (var match in results)
             {
