@@ -3,6 +3,7 @@ using Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Domain.Users;
 
 namespace Tests
 {
@@ -27,11 +28,10 @@ namespace Tests
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Creating Championship]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var champ = new Championship();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");
 
             Assert.Equal("Tiago", champ.CurrentUser.Name);
-            Assert.True(champ.CurrentUser.CBF);
+            Assert.Equal(Profile.CBF, champ.CurrentUser.Profile);
             Assert.NotNull(champ.CurrentUser.Id);
         }
         [Fact]
@@ -44,7 +44,7 @@ namespace Tests
             champ.RegisterUser("Tiago");
 
             Assert.Equal("Tiago", champ.CurrentUser.Name);
-            Assert.False(champ.CurrentUser.CBF);
+            Assert.NotEqual(Profile.CBF, champ.CurrentUser.Profile);
             Assert.NotNull(champ.CurrentUser.Id);
         }
         [Fact]
@@ -54,10 +54,10 @@ namespace Tests
             var champ = new Championship();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "password");
+            champ.RegisterUser("Tiago", Profile.CBF , "admin");
 
             Assert.Equal("Tiago", champ.CurrentUser.Name);
-            Assert.False(champ.CurrentUser.CBF);
+             Assert.NotEqual(Profile.CBF, champ.CurrentUser.Profile);
             Assert.NotNull(champ.CurrentUser.Id);
         }
         [Fact]
@@ -68,7 +68,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             var tryRegist = champ.RegisterTeams(teamsmock);
@@ -101,7 +101,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");       
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");       
             champ.ChampionshipStart(champ.CurrentUser);     
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
@@ -117,7 +117,7 @@ namespace Tests
             var champ = new Championship();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -140,7 +140,7 @@ namespace Tests
             var champ = new Championship();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
             champ.RegisterTeams(TeamsMock());
@@ -161,7 +161,7 @@ namespace Tests
             var champ = new Championship();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -185,7 +185,7 @@ namespace Tests
             var champ = new Championship();
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -213,7 +213,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -233,7 +233,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -254,7 +254,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock(7);
             champ.RegisterTeams(teamsmock);
@@ -273,7 +273,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -296,7 +296,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -318,7 +318,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock(7);
             champ.RegisterTeams(teamsmock);
@@ -338,7 +338,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -359,7 +359,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -427,7 +427,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -472,7 +472,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -537,7 +537,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -594,7 +594,7 @@ namespace Tests
 
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register User]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
 //      <~~~~~~~~~~~~~~~~~~~~~~~[Register Teams]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
@@ -668,7 +668,7 @@ namespace Tests
         public void Should_RegisterTeams_on_Championship_and_CreateMatches_GenerateRound_then_SetMatchResult_till_last_match()
         {
             var champ = new Championship();
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
             champ.CreateMatches();
@@ -718,7 +718,7 @@ namespace Tests
         public void Should_RegisterTeams_on_Championship_and_CreateMatches_GenerateRound_then_SetMatchResult_ShowMatchesResult()
         {
             var champ = new Championship();
-            champ.RegisterUser("Tiago", "Pa$Sw0rD");            
+            champ.RegisterUser("Tiago", Profile.CBF , "admin123");            
             var teamsmock = TeamsMock();
             champ.RegisterTeams(teamsmock);
             champ.CreateMatches();
