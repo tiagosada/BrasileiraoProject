@@ -12,17 +12,27 @@ namespace WebAPI.Controllers.Users
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
+        public readonly UserService _usersService;
+        public UsersController()
+        {
+            _usersService = new UserService();
+        }
         [HttpPost]
         public IActionResult Create(CreateUserRequest request)
         {
+            // if (!_usersService.ValidateName(request.Name))
+            // {
+            //    return BadRequest("Invalid Name");
+            // }
             if (request.Profile == Profile.CBF && request.Password != "admin123")
             {
                 return Unauthorized();
             }
-            
-            var user = new User(request.Name, request.Profile);
 
-            return Ok(user.Id);
+
+            var userId = _usersService.Create(request.Name, request.Profile);
+        
+            return Ok(userId);
         }
     }
 }

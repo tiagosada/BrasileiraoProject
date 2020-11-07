@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Users;
 
 namespace Domain
 {
@@ -16,24 +17,30 @@ namespace Domain
         public int Round {get; private set;} = 0;
         public bool RoundStarted {get; private set;} = false;
         public IReadOnlyCollection<Team> Teams => teams;
-        public User CurrentUser {get; private set;}
+        public User CurrentUser {get; private set;} //remover
         public int MatchesPerRounds {get; private set;}
 
 //     <~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[Register]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-        public void RegisterUser(string name, string password)
+        public bool RegisterUser(string name, Profile profile, string password)
         {
-            CurrentUser = new User(name, password);
+            if (password != "admin123")
+            {
+                return false;
+            }
+            CurrentUser = new User(name, profile);
+            return true;
         }
-        public void RegisterUser(string name)
+        public bool RegisterUser(string name)
         {
-            CurrentUser = new User(name);
+            CurrentUser = new User(name, Profile.Supporter);
+            return true;
         }
+
 
         public bool RegisterTeams(List<Team> newteams)
         {
-            //if(CurrentUser.Profile != 0) (WebAPI)
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
@@ -48,7 +55,7 @@ namespace Domain
         }
         public bool RemovePlayer(Player player, Guid IdTeam)
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
@@ -63,7 +70,7 @@ namespace Domain
 
         public bool AddPlayer(Player player, Guid IdTeam)
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
@@ -73,7 +80,7 @@ namespace Domain
         }
         public bool CreateMatches()
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
@@ -136,7 +143,7 @@ namespace Domain
         }
         public bool RoundGenerator()
         { 
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
@@ -173,7 +180,7 @@ namespace Domain
         }
         public Match FindCurrentMatch()
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return null;
             }
@@ -191,7 +198,7 @@ namespace Domain
 
         public bool SetMatchResult(List<string> HplayerGoals, List<string> VplayerGoals)
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }   
@@ -218,7 +225,7 @@ namespace Domain
         }
         public bool SetMatchResult()
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
@@ -239,7 +246,7 @@ namespace Domain
         }
         public bool ChampionshipStart(User user)
         {
-            if(!CurrentUser.CBF)
+            if(CurrentUser.Profile != Profile.CBF)
             {
                 return false;
             }
