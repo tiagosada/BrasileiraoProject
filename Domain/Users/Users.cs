@@ -6,7 +6,7 @@ namespace Domain.Users
     public class User
     {
         public Guid Id
-        {get; set;} = Guid.NewGuid();
+        {get; set;} = new Guid();
 
         public string Name
         {get; set;}
@@ -16,6 +16,7 @@ namespace Domain.Users
 
         public User(string name, Profile profile)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Profile = profile;
         }
@@ -27,10 +28,10 @@ namespace Domain.Users
             }
 
             var words = Name.Split(' ');
-            if (words.Length < 2)
-            {
-                return false;
-            }
+            // if (words.Length < 2)
+            // {
+            //     return false;
+            // }
 
             foreach (var word in words)
             {
@@ -57,7 +58,7 @@ namespace Domain.Users
         }
         public bool Validate()
         {
-            if (ValidateProfile() && ValidateName())
+            if (ValidateName())
             {
                 return true;
             }

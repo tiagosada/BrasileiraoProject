@@ -20,19 +20,24 @@ namespace WebAPI.Controllers.Users
         [HttpPost]
         public IActionResult Create(CreateUserRequest request)
         {
-            // if (!_usersService.ValidateName(request.Name))
-            // {
-            //    return BadRequest("Invalid Name");
-            // }
             if (request.Profile == Profile.CBF && request.Password != "admin123")
             {
                 return Unauthorized();
             }
 
-
             var userId = _usersService.Create(request.Name, request.Profile);
+
+            if (userId == Guid.Empty)
+            {
+               return BadRequest("Invalid Inputs");
+            }
         
-            return Ok(userId);
+            return NoContent();
+        }
+        [HttpGet("{userID}")]
+        public User GetUser(Guid userId)
+        {
+            return _usersService.GetUser(userId);
         }
     }
 }

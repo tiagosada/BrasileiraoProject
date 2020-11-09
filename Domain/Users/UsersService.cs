@@ -13,7 +13,11 @@ namespace Domain.Users
                 UserRepository.Add(user);
                 return user.Id;
             }
-            return new Guid();
+            return Guid.Empty;
+        }
+        public User GetUser(Guid id)
+        {
+            return GetUser(id);
         }
     }
 }

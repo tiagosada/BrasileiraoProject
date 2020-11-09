@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain.Users
 {
@@ -11,5 +12,10 @@ namespace Domain.Users
         {
             _users.Add(user);
         }
+        public static User GetUser(Guid id)
+        {
+            return _users.FirstOrDefault(user => user.Id == id);
+        }
     }
+    
 }
