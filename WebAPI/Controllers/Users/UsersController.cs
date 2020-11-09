@@ -25,14 +25,14 @@ namespace WebAPI.Controllers.Users
                 return Unauthorized();
             }
 
-            var userId = _usersService.Create(request.Name, request.Profile);
+            var response = _usersService.Create(request.Name, request.Profile);
 
-            if (userId == Guid.Empty)
+            if (!response.isValid)
             {
-               return BadRequest("Invalid Inputs");
+               return BadRequest(response.Errors);
             }
         
-            return Ok(userId);
+            return Ok(response.Id);
         }
         [HttpGet("{userID}")]
         public User GetUser(Guid userId)
