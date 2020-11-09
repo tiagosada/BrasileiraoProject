@@ -32,7 +32,7 @@ namespace WebAPI.Controllers.Users
                return BadRequest("Invalid Inputs");
             }
         
-            return NoContent();
+            return Ok(userId);
         }
         [HttpGet("{userID}")]
         public User GetUser(Guid userId)

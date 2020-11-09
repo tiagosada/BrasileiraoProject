@@ -17,7 +17,7 @@ namespace Domain.Users
         }
         public User GetUser(Guid id)
         {
-            return GetUser(id);
+            return UserRepository.GetUser(id);
         }
     }
 }
