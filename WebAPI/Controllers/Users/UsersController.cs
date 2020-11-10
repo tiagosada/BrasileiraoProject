@@ -43,6 +43,7 @@ namespace WebAPI.Controllers.Users
             {
                 return Guid.Parse(_userId);
             }
+            
             return Guid.Empty;
         }
     }
