@@ -1,4 +1,5 @@
 using Xunit;
+using Domain.Players;
 using Domain;
 
 namespace Tests
@@ -58,9 +59,9 @@ namespace Tests
         {
             var player = new Player(name);
 
-            var isValid = player.ValidateName();
+            var checkIf = player.Validate();
 
-            Assert.False(isValid);
+            Assert.False(checkIf.isValid);
         }
 
         [Theory]
@@ -70,9 +71,9 @@ namespace Tests
         {
             var player = new Player(name);
 
-            var isValid = player.ValidateName();
+            var checkIf = player.Validate();
 
-            Assert.True(isValid);
+            Assert.False(checkIf.isValid);
         }
     }
 }
