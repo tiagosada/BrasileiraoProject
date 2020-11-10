@@ -25,19 +25,25 @@ namespace WebAPI.Controllers.Users
                 return Unauthorized();
             }
 
-            var userId = _usersService.Create(request.Name, request.Profile);
+            var response = _usersService.Create(request.Name, request.Profile);
 
-            if (userId == Guid.Empty)
+            if (!response.isValid)
             {
-               return BadRequest("Invalid Inputs");
+               return BadRequest(response.Errors);
             }
-        
-            return Ok(userId);
+            
+            return Ok(response.Id);
         }
-        [HttpGet("{userID}")]
-        public User GetUser(Guid userId)
+        [HttpGet]
+        public Guid GetUser()
         {
-            return _usersService.GetUser(userId);
+            var headers= Request.Headers;
+            headers.TryGetValue("UserId", out var _userId);
+            if (_usersService.ContainsUser(_userId))
+            {
+                return Guid.Parse(_userId);
+            }
+            return Guid.Empty;
         }
     }
 }
