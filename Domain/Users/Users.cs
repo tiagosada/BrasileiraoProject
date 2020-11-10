@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Domain.Users
@@ -28,10 +29,10 @@ namespace Domain.Users
             }
 
             var words = Name.Split(' ');
-            // if (words.Length < 2)
-            // {
-            //     return false;
-            // }
+            if (words.Length < 2)
+            {
+                return false;
+            }
 
             foreach (var word in words)
             {
@@ -56,14 +57,18 @@ namespace Domain.Users
             }
             return true;
         }
-        public bool Validate()
+        public (IList<string> errors, bool isValid) Validate()
         {
-            if (ValidateName())
+            var errors = new List<string>();
+            if (!ValidateName())
             {
-                return true;
+                errors.Add("Nome inválido.");
             }
-            return false;
+            if (!ValidateProfile())
+            {
+                errors.Add("Perfil inválido.");
+            }
+            return (errors, errors.Count == 0);
         }
-
     }
 }
