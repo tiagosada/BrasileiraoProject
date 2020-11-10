@@ -31,13 +31,19 @@ namespace WebAPI.Controllers.Users
             {
                return BadRequest(response.Errors);
             }
-        
+            
             return Ok(response.Id);
         }
-        [HttpGet("{userID}")]
-        public User GetUser(Guid userId)
+        [HttpGet]
+        public Guid GetUser()
         {
-            return _usersService.GetUser(userId);
+            var headers= Request.Headers;
+            headers.TryGetValue("UserId", out var _userId);
+            if (_usersService.ContainsUser(_userId))
+            {
+                return Guid.Parse(_userId);
+            }
+            return Guid.Empty;
         }
     }
 }
