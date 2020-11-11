@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Domain.Players;
 using Domain.Users;
+using Microsoft.Extensions.Primitives;
 
 namespace WebAPI.Controllers.Players
 {
@@ -15,17 +16,35 @@ namespace WebAPI.Controllers.Players
     public class PlayersController : ControllerBase
     {
         public readonly PlayersService _playersService;
+        public readonly UserService _usersService;
         public PlayersController()
         {
             _playersService = new PlayersService();
+            _usersService = new UserService();
         }
         
         [HttpPost]
-        public IActionResult Post(CreatePlayerRequest request)
+        public IActionResult CreatePlayer(CreatePlayerRequest request)
         {
-            if (request.User.Profile != Profile.CBF)
+            StringValues _userId;
+            var headers= Request.Headers;
+            if(!headers.TryGetValue("UserId", out _userId))
             {
-                return Forbid("User is not CBF");
+                return Unauthorized();
+            }    
+
+            var user = _usersService.GetUser(Guid.Parse(_userId));
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (user.Profile == Profile.Supporter)
+            {
+                // return Forbid(); //notWorking!
+                return StatusCode(403, "User not CBF!");
+
             }
 
             var response = _playersService.Create(request.Name);

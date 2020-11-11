@@ -34,17 +34,16 @@ namespace WebAPI.Controllers.Users
             
             return Ok(response.Id);
         }
-        [HttpGet]
-        public Guid GetUser()
-        {
-            var headers= Request.Headers;
-            headers.TryGetValue("UserId", out var _userId);
-            if (_usersService.ContainsUser(_userId))
-            {
-                return Guid.Parse(_userId);
-            }
+    //     [HttpGet]
+    //     public Guid GetUser()
+    //     {
             
-            return Guid.Empty;
-        }
+    //         if (_usersService.ContainsUser(_userId))
+    //         {
+    //             return Guid.Parse(_userId);
+    //         }
+            
+    //         return Guid.Empty;
+    //     }
     }
 }
