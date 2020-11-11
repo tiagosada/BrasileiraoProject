@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Domain.Users;
 
 namespace Domain.Players
 {
@@ -24,5 +25,9 @@ namespace Domain.Players
         {
             return (from p in PlayersRepository.Players select p.Id).ToList();
         }
+        // public User GetBYId()
+        // {
+        //     return (from p in PlayersRepository.Players select p.Id).ToList();
+        // }
     }
 }
