@@ -11,3 +11,6 @@
  >> + R8. O campeonato deve apresentar a relações dos artilheiros. (Torcedor)
  >> + R9. O campeonato deve fornecer os resultados de cada rodada (Torcedor)
  >> + R10. O campeonato deve apresentar a relação dos times rebaixados (4 últimos) e classificados para a libertadores (4 primeiros) (Torcedor)
+
+# Learning WebAPI 
+# Learning JWT
