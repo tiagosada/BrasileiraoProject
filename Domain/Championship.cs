@@ -271,21 +271,21 @@ namespace Domain
         }
         public List<Team> DisplayTable()
         {
-            var TeamOrdered = teams.OrderByDescending(x => x.Table.Score).ThenByDescending(x => x.Table.GoalsDifference).ThenByDescending(x => x.Table.MakedGoals);
+            var TeamOrdered = teams.OrderByDescending(x => x.Score).ThenByDescending(x => x.GoalsDifference).ThenByDescending(x => x.MakedGoals);
             
             return TeamOrdered.ToList();
 
         }
         public List<Team> QualifiedTeams()
         {
-            var TeamOrdered = teams.OrderByDescending(x => x.Table.Score).ThenByDescending(x => x.Table.GoalsDifference).ThenByDescending(x => x.Table.MakedGoals);
+            var TeamOrdered = teams.OrderByDescending(x => x.Score).ThenByDescending(x => x.GoalsDifference).ThenByDescending(x => x.MakedGoals);
             
             return TeamOrdered.Take(4).ToList();
 
         }
         public List<Team> DisqualifiedTeams()
         {
-            var TeamOrdered = teams.OrderByDescending(x => x.Table.Score).ThenByDescending(x => x.Table.GoalsDifference).ThenByDescending(x => x.Table.MakedGoals);
+            var TeamOrdered = teams.OrderByDescending(x => x.Score).ThenByDescending(x => x.GoalsDifference).ThenByDescending(x => x.MakedGoals);
             
             return TeamOrdered.TakeLast(4).ToList();
 

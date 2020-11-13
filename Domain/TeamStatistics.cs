@@ -1,8 +1,9 @@
 using System;
+using Domain.Entities;
 
 namespace Domain
 {
-    public class TeamStatistics 
+    public abstract class TeamStatistics : Entity
     {
         public int Score { get; private set;}
         public int ConcededGoals { get; private set;} 

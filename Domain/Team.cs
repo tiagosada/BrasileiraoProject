@@ -4,13 +4,11 @@ using System.Linq;
 
 namespace Domain
 {
-    public class Team 
+    public class Team : TeamStatistics
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
         public string TeamName { get; private set; }
         private List<Player> players { get; set; } = new List<Player>();
         public IReadOnlyCollection<Player> Players => players;
-        public TeamStatistics Table { get; set;} = new TeamStatistics();
    
         public Team(string name) 
         {

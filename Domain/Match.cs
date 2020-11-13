@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Domain.Entities;
 
 namespace Domain
 {
-    public class Match
+    public class Match : Entity
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
         public Team HomeTeam { get; private set; }
         public Team VisitingTeam { get; private set; }
         public int? HomeTeamGoals { get; private set; }
@@ -40,40 +40,40 @@ namespace Domain
 
             if (HomeTeamGoals > VisitingTeamGoals)
             {
-                HomeTeam.Table.ScoreWin();
-                VisitingTeam.Table.ScoreDefeat();
+                HomeTeam.ScoreWin();
+                VisitingTeam.ScoreDefeat();
             }
             else if (HomeTeamGoals < VisitingTeamGoals)
             {
-                VisitingTeam.Table.ScoreWin();
-                HomeTeam.Table.ScoreDefeat();
+                VisitingTeam.ScoreWin();
+                HomeTeam.ScoreDefeat();
             }
             else
             {
-                VisitingTeam.Table.ScoreDraw();
-                HomeTeam.Table.ScoreDraw();
+                VisitingTeam.ScoreDraw();
+                HomeTeam.ScoreDraw();
             }
         }
         public void PlayMatch()
         {
             HomeTeamGoals = 0; VisitingTeamGoals = 0;
-            VisitingTeam.Table.ScoreDraw();
-            HomeTeam.Table.ScoreDraw();
+            VisitingTeam.ScoreDraw();
+            HomeTeam.ScoreDraw();
             
         }
         
         public void ScoreGoalHomeTeam()
         {
             HomeTeamGoals++;
-            HomeTeam.Table.ScoreMakedGoals();
-            VisitingTeam.Table.ScoreConcededGoals();
+            HomeTeam.ScoreMakedGoals();
+            VisitingTeam.ScoreConcededGoals();
         }
 
         public void ScoreGoalVisitingTeam()
         {
             VisitingTeamGoals++;
-            VisitingTeam.Table.ScoreMakedGoals();
-            HomeTeam.Table.ScoreConcededGoals();
+            VisitingTeam.ScoreMakedGoals();
+            HomeTeam.ScoreConcededGoals();
         }
     }
 }

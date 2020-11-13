@@ -1,21 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Domain.People;
 
 namespace Domain.Users
 {
     public class User : Person
     {
-        public Guid Id
-        {get; set;} = new Guid();
-
-        public string Name
-        {get; set;}
-
-        public Profile Profile
-        {get; set;}
-
+        public Profile Profile{get; set;}
         public User(string name, Profile profile) : base (name)
         {
             Id = Guid.NewGuid();

@@ -391,12 +391,12 @@ namespace Tests
 
        //   HomeTeam test
             Assert.Equal(4, currentmat.HomeTeamGoals);
-            Assert.Equal(4, currentmat.HomeTeam.Table.MakedGoals);
-            Assert.Equal(3, currentmat.HomeTeam.Table.ConcededGoals);
-            Assert.Equal(1, currentmat.HomeTeam.Table.Wins);
-            Assert.Equal(0, currentmat.HomeTeam.Table.Defeats);
-            Assert.Equal(0, currentmat.HomeTeam.Table.Draws);
-            Assert.Equal(3, currentmat.HomeTeam.Table.Score);
+            Assert.Equal(4, currentmat.HomeTeam.MakedGoals);
+            Assert.Equal(3, currentmat.HomeTeam.ConcededGoals);
+            Assert.Equal(1, currentmat.HomeTeam.Wins);
+            Assert.Equal(0, currentmat.HomeTeam.Defeats);
+            Assert.Equal(0, currentmat.HomeTeam.Draws);
+            Assert.Equal(3, currentmat.HomeTeam.Score);
 
             // Players Score test
             foreach (var player in hScorerList)
@@ -405,12 +405,12 @@ namespace Tests
             }
        //   VisistingTeam test
             Assert.Equal(3, currentmat.VisitingTeamGoals);
-            Assert.Equal(3, currentmat.VisitingTeam.Table.MakedGoals);
-            Assert.Equal(4, currentmat.VisitingTeam.Table.ConcededGoals);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.Wins);
-            Assert.Equal(1, currentmat.VisitingTeam.Table.Defeats);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.Draws);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.Score);
+            Assert.Equal(3, currentmat.VisitingTeam.MakedGoals);
+            Assert.Equal(4, currentmat.VisitingTeam.ConcededGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.Wins);
+            Assert.Equal(1, currentmat.VisitingTeam.Defeats);
+            Assert.Equal(0, currentmat.VisitingTeam.Draws);
+            Assert.Equal(0, currentmat.VisitingTeam.Score);
 
             // Players Score test
             foreach (var player in vScorerList)
@@ -446,21 +446,21 @@ namespace Tests
 
        //   HomeTeam test
             Assert.Equal(0, currentmat.HomeTeamGoals);
-            Assert.Equal(0, currentmat.HomeTeam.Table.MakedGoals);
-            Assert.Equal(0, currentmat.HomeTeam.Table.ConcededGoals);
-            Assert.Equal(0, currentmat.HomeTeam.Table.Wins);
-            Assert.Equal(0, currentmat.HomeTeam.Table.Defeats);
-            Assert.Equal(1, currentmat.HomeTeam.Table.Draws);
-            Assert.Equal(1, currentmat.HomeTeam.Table.Score);
+            Assert.Equal(0, currentmat.HomeTeam.MakedGoals);
+            Assert.Equal(0, currentmat.HomeTeam.ConcededGoals);
+            Assert.Equal(0, currentmat.HomeTeam.Wins);
+            Assert.Equal(0, currentmat.HomeTeam.Defeats);
+            Assert.Equal(1, currentmat.HomeTeam.Draws);
+            Assert.Equal(1, currentmat.HomeTeam.Score);
 
        //   VisistingTeam test
             Assert.Equal(0, currentmat.VisitingTeamGoals);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.MakedGoals);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.ConcededGoals);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.Wins);
-            Assert.Equal(0, currentmat.VisitingTeam.Table.Defeats);
-            Assert.Equal(1, currentmat.VisitingTeam.Table.Draws);
-            Assert.Equal(1, currentmat.VisitingTeam.Table.Score);
+            Assert.Equal(0, currentmat.VisitingTeam.MakedGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.ConcededGoals);
+            Assert.Equal(0, currentmat.VisitingTeam.Wins);
+            Assert.Equal(0, currentmat.VisitingTeam.Defeats);
+            Assert.Equal(1, currentmat.VisitingTeam.Draws);
+            Assert.Equal(1, currentmat.VisitingTeam.Score);
 
         }
 
@@ -506,21 +506,21 @@ namespace Tests
             var orderedTeams = champ.DisplayTable();
             
             Assert.Equal(currentmat.HomeTeam.TeamName, orderedTeams[0].TeamName);
-            Assert.Equal(4, orderedTeams[0].Table.MakedGoals);
-            Assert.Equal(3, orderedTeams[0].Table.ConcededGoals);
-            Assert.Equal(1, orderedTeams[0].Table.Wins);
-            Assert.Equal(0, orderedTeams[0].Table.Defeats);
-            Assert.Equal(0, orderedTeams[0].Table.Draws);
-            Assert.Equal(3, orderedTeams[0].Table.Score);
+            Assert.Equal(4, orderedTeams[0].MakedGoals);
+            Assert.Equal(3, orderedTeams[0].ConcededGoals);
+            Assert.Equal(1, orderedTeams[0].Wins);
+            Assert.Equal(0, orderedTeams[0].Defeats);
+            Assert.Equal(0, orderedTeams[0].Draws);
+            Assert.Equal(3, orderedTeams[0].Score);
 
        //   VisistingTeam test
             Assert.Equal(currentmat.VisitingTeam.TeamName, orderedTeams[orderedTeams.Count-1].TeamName);
-            Assert.Equal(3, orderedTeams[orderedTeams.Count-1].Table.MakedGoals);
-            Assert.Equal(4, orderedTeams[orderedTeams.Count-1].Table.ConcededGoals);
-            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Wins);
-            Assert.Equal(1, orderedTeams[orderedTeams.Count-1].Table.Defeats);
-            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Draws);
-            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Table.Score);
+            Assert.Equal(3, orderedTeams[orderedTeams.Count-1].MakedGoals);
+            Assert.Equal(4, orderedTeams[orderedTeams.Count-1].ConcededGoals);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Wins);
+            Assert.Equal(1, orderedTeams[orderedTeams.Count-1].Defeats);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Draws);
+            Assert.Equal(0, orderedTeams[orderedTeams.Count-1].Score);
 
             // Players Score test
             foreach (var player in vScorerList)
@@ -704,14 +704,14 @@ namespace Tests
 
             for(int i = 0; i < 3; i++)
             {
-                Assert.True(qualified[i].Table.Score >= qualified[i+1].Table.Score);
+                Assert.True(qualified[i].Score >= qualified[i+1].Score);
             }
 
             var unqualified = champ.DisqualifiedTeams();
 
             for(int i = 0; i < 4; i++)
             {
-                Assert.True(qualified[3].Table.Score >= unqualified[i].Table.Score);
+                Assert.True(qualified[3].Score >= unqualified[i].Score);
             }
         }
         [Fact]

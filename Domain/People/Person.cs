@@ -1,10 +1,12 @@
 using System.Linq;
+using Domain.Entities;
 
 namespace Domain.People
 {
-    public abstract class Person
+    public abstract class Person : Entity
     {
         public string Name { get; protected set; }
+        
         public Person(string name)
         {
             Name = name;

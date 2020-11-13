@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Domain.People;
 
 namespace Domain
 {
-    public class Player
+    public class Player : Person
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
-        public string Name { get; private set; }
 
         public int Goals { get; set; }
         //public string Position { get; set; }
 
-        public Player(string name)
+        public Player(string name) : base (name)
         {
-            Name = name;
             Id = Guid.NewGuid();
         }
         public void GiveGoal()
@@ -31,33 +28,6 @@ namespace Domain
             }
 
             return (errs, errs.Count == 0);
-        }
-
-        private bool ValidateName()
-        {
-            if (string.IsNullOrEmpty(Name))
-            {
-                return false;
-            }
-
-            var words = Name.Split(' ');
-            if (words.Length < 1)
-            {
-                return false;
-            }
-
-            foreach (var word in words)
-            {
-                if (word.Trim().Length < 2)
-                {
-                    return false;
-                }
-                if (word.Any(x => !char.IsLetter(x)))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

@@ -118,10 +118,10 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.PlayMatch();
+            team.PlayMatch();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.PlayedMatchs);
+            Assert.Equal(1, team.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -131,11 +131,11 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreWin();
+            team.ScoreWin();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.Wins);
-            Assert.Equal(1, team.Table.PlayedMatchs);
+            Assert.Equal(1, team.Wins);
+            Assert.Equal(1, team.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -145,11 +145,11 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreDefeat();
+            team.ScoreDefeat();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.Defeats);
-            Assert.Equal(1, team.Table.PlayedMatchs);
+            Assert.Equal(1, team.Defeats);
+            Assert.Equal(1, team.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -159,11 +159,11 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreDraw();
+            team.ScoreDraw();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.Draws);
-            Assert.Equal(1, team.Table.PlayedMatchs);
+            Assert.Equal(1, team.Draws);
+            Assert.Equal(1, team.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -173,10 +173,10 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreConcededGoals();
+            team.ScoreConcededGoals();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.ConcededGoals);
+            Assert.Equal(1, team.ConcededGoals);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -186,10 +186,10 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreMakedGoals();
+            team.ScoreMakedGoals();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.MakedGoals);
+            Assert.Equal(1, team.MakedGoals);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -199,11 +199,11 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreWin();
+            team.ScoreWin();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(3, team.Table.Score);
-            Assert.Equal(1, team.Table.PlayedMatchs);
+            Assert.Equal(3, team.Score);
+            Assert.Equal(1, team.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -213,11 +213,11 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreDraw();
+            team.ScoreDraw();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(1, team.Table.Score);
-            Assert.Equal(1, team.Table.PlayedMatchs);
+            Assert.Equal(1, team.Score);
+            Assert.Equal(1, team.PlayedMatchs);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
@@ -227,13 +227,13 @@ namespace Tests
             var name = "Flasco";
 
             var team = new Team(name);
-            team.Table.ScoreWin();
-            team.Table.UpdateRate();
+            team.ScoreWin();
+            team.UpdateRate();
 
             Assert.Equal(name, team.TeamName);
-            Assert.Equal(3, team.Table.Score);
-            Assert.Equal(1, team.Table.PlayedMatchs);
-            Assert.Equal(100, team.Table.Rate);
+            Assert.Equal(3, team.Score);
+            Assert.Equal(1, team.PlayedMatchs);
+            Assert.Equal(100, team.Rate);
             Assert.NotNull(team.Id);
             Assert.Empty(team.Players);
         }
