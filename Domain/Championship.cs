@@ -28,12 +28,12 @@ namespace Domain
             {
                 return false;
             }
-            CurrentUser = new User(name, profile);
+            //CurrentUser = new User(name, profile);
             return true;
         }
         public bool RegisterUser(string name)
         {
-            CurrentUser = new User(name, Profile.Supporter);
+            //CurrentUser = new User(name, Profile.Supporter);
             return true;
         }
 

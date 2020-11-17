@@ -8,9 +8,8 @@ namespace Domain.Users
         public Guid Id { get; set; }
         public IList<string> Errors { get; set; }
         public bool isValid { get; set; }
-        public CreatedUserDTO(Guid id)
+        public CreatedUserDTO()
         {
-            Id = id;
             isValid = true;
         }
         public CreatedUserDTO(IList<string> errors)

@@ -12,9 +12,9 @@ namespace Domain.Users
         {
             _users.Add(user);
         }
-        public static User GetUser(Guid id)
+       public static User FindUser(string name)
         {
-            return _users.FirstOrDefault(user => user.Id == id);
+            return _users.FirstOrDefault(user => user.Name == name);
         }
     }
     

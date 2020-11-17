@@ -7,9 +7,10 @@ namespace Domain.Users
     public class User : Person
     {
         public Profile Profile{get; set;}
-        public User(string name, Profile profile) : base (name)
+        public string Password {get; set;}
+        public User(string name, string password, Profile profile) : base (name)
         {
-            Id = Guid.NewGuid();
+            Password = password;
             Profile = profile;
         }
         private bool ValidateProfile()
