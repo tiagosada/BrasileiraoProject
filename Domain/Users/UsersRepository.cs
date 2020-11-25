@@ -1,20 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Infra;
 
 namespace Domain.Users
 {
-    static class UserRepository
+    class UsersRepository
     {
-        public static List<User> _users { get; set; } = new List<User>();
-        public static IReadOnlyCollection<User> Users => _users;
-        public static void Add(User user)
+        public void Add(User user)
         {
-            _users.Add(user);
+            using (var db = new BrasileiraoContext())
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
         }
-       public static User FindUser(string name)
+        public void Remove(User user)
         {
-            return _users.FirstOrDefault(user => user.Name == name);
+            using (var db = new BrasileiraoContext())
+            {
+                db.Users.Remove(user);
+                db.SaveChanges();
+            }
+        }
+       public User FindUser(string name)
+        {
+            using (var db = new BrasileiraoContext())
+            {
+                return db.Users.FirstOrDefault(user => user.Name == name);
+            }
+        }
+        public User SearchForUserId(Guid id)
+        {
+            using (var db = new BrasileiraoContext())
+            {
+                return db.Users.FirstOrDefault(user => user.Id == id);
+            }
         }
     }
     

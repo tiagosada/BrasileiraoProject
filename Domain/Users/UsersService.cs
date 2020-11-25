@@ -5,6 +5,7 @@ namespace Domain.Users
 {
     public class UserService
     {
+        private UsersRepository _usersRepository { get; set; } = new UsersRepository();
         public CreatedUserDTO Create(string name, string password, Profile profile)
         {
             var user = new User(name, password, profile);
@@ -12,14 +13,32 @@ namespace Domain.Users
 
             if (userValidation.isValid)
             {
-                UserRepository.Add(user);
+                _usersRepository.Add(user);
+                return new CreatedUserDTO();
+            }
+            return new CreatedUserDTO(userValidation.errors);
+        }
+        
+        public CreatedUserDTO Rename(string name, User target)
+        {
+            var user = new User(name, target.Password, target.Profile);
+            var userValidation = user.Validate();
+
+            if (userValidation.isValid)
+            {
+                _usersRepository.Remove(target);
+                _usersRepository.Add(user);
                 return new CreatedUserDTO();
             }
             return new CreatedUserDTO(userValidation.errors);
         }
         public User FindUser(string name)
         {
-            return UserRepository.FindUser(name);
+            return _usersRepository.FindUser(name);
+        }
+        public User SearchForUserId(Guid id)
+        {
+            return _usersRepository.SearchForUserId(id);
         }
     }
 }

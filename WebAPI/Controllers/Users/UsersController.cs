@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 
@@ -60,7 +56,21 @@ namespace WebAPI.Controllers.Users
                      
             // Retorna os dados
             var token = TokenService.GenerateToken(foundUser.Name, foundUser.Profile.ToString());
-            return Ok($"Bem vindo {foundUser.Name} /n {token} ");
+            return Ok($"Bem vindo {foundUser.Name} \n {token} ");
+        }
+        [HttpPut]
+        [Route("rename")]
+        [Authorize]
+        public IActionResult Rename(string name)
+        {
+            Request.Headers.TryGetValue("Id", out var _id);
+            var id = Guid.Parse(_id);
+            // Recupera o usuário
+            var foundUser = _usersService.SearchForUserId(id);
+                     
+            // Retorna os dados
+            var token = TokenService.GenerateToken(foundUser.Name, foundUser.Profile.ToString());
+            return Ok($"Bem vindo {foundUser.Name} \n {token} ");
         }
         [HttpGet]
         [Route("anonymous")]
@@ -75,11 +85,12 @@ namespace WebAPI.Controllers.Users
         [HttpGet]
         [Route("supporter")]
         [Authorize(Roles = "Supporter, CBF")]
-        public string Employee() => "Torcedor";
+        public string Employee() => String.Format("Torcedor", User.Identity.Name);
 
         [HttpGet]
         [Route("CBF")]
         [Authorize(Roles = "CBF")]
-        public string Manager() => "CBF";
+        public string Manager() => String.Format("CBF", User.Identity.Name);
+        
     }
 }
