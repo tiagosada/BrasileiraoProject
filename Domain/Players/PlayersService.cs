@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Domain.Users;
+using Domain.Players;
 
 namespace Domain.Players
 {
     public class PlayersService
     {
-        public CreatedPlayerDTO Create(string name)
+        public CreatedPlayerDTO Create(Guid teamId, string name)
         {
-            var player = new Player(name);
+            var player = new Player(teamId, name);
             var playerVal = player.Validate();
 
             if (!playerVal.isValid)

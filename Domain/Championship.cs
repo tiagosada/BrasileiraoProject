@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Players;
+using Domain.Teams;
 using Domain.Users;
 
 namespace Domain
@@ -310,7 +312,7 @@ namespace Domain
         }
         public Guid GetTeamIdByName(string teamName)
         {
-            return Teams.First(team => team.TeamName == teamName).Id;
+            return Teams.First(team => team.Name == teamName).Id;
         }
     }
 }

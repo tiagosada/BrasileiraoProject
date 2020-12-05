@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Domain;
+using Domain.Players;
 
 namespace WebAPI.Controllers.Championship
 {
@@ -13,16 +14,16 @@ namespace WebAPI.Controllers.Championship
     public class ChampionshipController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Create(ChampCreateUserRequest request)
-        {
+        // public IActionResult Create(ChampCreateUserRequest request)
+        // {
             // if (request.Profile == Profile.CBF && request.Password != "admin123")
             // {
             //     return Unauthorized();
             // }
             
-            var player = new Player(request.Name);
+            // var player = new Player(request.Name);
 
-            return Ok(player.Id);
-        }
+            // return Ok(player.Id);
+        // }
     }
 }

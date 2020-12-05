@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using Domain.People;
+using Domain.Teams;
 
-namespace Domain
+namespace Domain.Players
 {
     public class Player : Person
     {
-
+        public virtual Team Team { get; private set; }
+        public Guid TeamId { get; private set; }
         public int Goals { get; set; }
         //public string Position { get; set; }
 
-        public Player(string name) : base (name)
+        public Player(Guid teamId, string name) : base (name)
         {
-            Id = Guid.NewGuid();
+            TeamId = teamId;
         }
         public void GiveGoal()
         {

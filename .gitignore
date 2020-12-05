@@ -134,3 +134,6 @@ $RECYCLE.BIN/
 _NCrunch*
 
 .vscode
+
+#volumes
+volumes

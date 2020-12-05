@@ -1,47 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-namespace Domain
+using Domain.Players;
+using Domain.Teams;
+namespace Domain.Teams
 {
     public class Team : TeamStatistics
     {
-        public string TeamName { get; private set; }
-        private List<Player> players { get; set; } = new List<Player>();
-        public IReadOnlyCollection<Player> Players => players;
+        public string Name { get; private set; }
+
+        public virtual List<Player> Players { get; set; } = new List<Player>();
    
         public Team(string name) 
         {
-            TeamName = name;
-            players = new List<Player>();      
+            Name = name; 
         }
         public Team(string name, List<Player> playerslist) 
         {
-            TeamName = name;
-            players = playerslist;     
+            Name = name;
+            Players = playerslist;     
         }
         public bool AddPlayer(Player Player)
         {
-            if (players.Count >= 32 )
+            if (Players.Count >= 32 )
             {
                 return false;
             }
-            players.Add(Player);
+            Players.Add(Player);
             return true;
         }
-        public bool RemovePlayer(Player Player)
+        public bool RemovePlayer(Player player)
         {
-            players.Remove(Player);
+            Players.Remove(player);
             return true;
         }
-        public bool AddPlayersList(List<Player> Players)
+        public bool AddPlayersList(List<Player> players)
         {
-            if (players.Count > 32 || Players.Count+players.Count >32)
+            if (players.Count > 32 || players.Count+Players.Count >32)
             {
                 return false;
             }
 
-            this.players.AddRange(Players);
+            this.Players.AddRange(players);
             return true;
         }
         public Player GetPlayerById(Guid playerId)
