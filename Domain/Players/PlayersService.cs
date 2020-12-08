@@ -1,7 +1,4 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using Domain.Players;
 
 namespace Domain.Players
 {
@@ -10,24 +7,20 @@ namespace Domain.Players
         public CreatedPlayerDTO Create(Guid teamId, string name)
         {
             var player = new Player(teamId, name);
-            var playerVal = player.Validate();
+            var playerValidation = player.Validate();
 
-            if (!playerVal.isValid)
+            if (playerValidation.isValid)
             {
-                return new CreatedPlayerDTO(playerVal.errors);
+                PlayersRepository.Add(player);
+                return new CreatedPlayerDTO(player.Id);
             }
-            
-            PlayersRepository.Add(player);
-            return new CreatedPlayerDTO(player.Id);
+
+            return new CreatedPlayerDTO(playerValidation.errors);
         }
 
-        public List<Guid> GetAll()
+        public Guid? Remove(Guid id)
         {
-            return (from p in PlayersRepository.Players select p.Id).ToList();
+            return PlayersRepository.Remove(id);
         }
-        // public User GetBYId()
-        // {
-        //     return (from p in PlayersRepository.Players select p.Id).ToList();
-        // }
     }
 }

@@ -8,6 +8,7 @@ namespace WebAPI.Controllers.Users
     {
         public Profile Profile { get; set; }
         public string RolePassword { get; set; }
+        public string Email { get; set; }
         public (List<string> errors,bool isValid) ValidatePassword(string password)
         {
             var errors = new List<string>();

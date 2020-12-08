@@ -1,63 +1,85 @@
-﻿  
-// using System;
-// using System.Collections.Generic;
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.Extensions.Logging;
-// using Domain.Players;
-// using Domain.Users;
-// using Microsoft.Extensions.Primitives;
-// namespace WebAPI.Controllers.Players
-// {
-//     [ApiController]
-//     [Route("[controller]")]
-//     public class PlayersController : ControllerBase
-//     {
-//         public readonly PlayersService _playersService;
-//         public readonly UserService _usersService;
-//         public PlayersController()
-//         {
-//             _playersService = new PlayersService();
-//             _usersService = new UserService();
-//         }
+﻿using Microsoft.AspNetCore.Mvc;
+using Domain.Players;
+using Microsoft.Extensions.Primitives;
+using Domain.Users;
+using System;
+
+namespace WebAPI.Controllers.Players
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class PlayersController : ControllerBase
+    {
+        private readonly PlayersService _playersService;
+        private readonly UsersService _usersService;
         
-//         [HttpPost]
-//         public IActionResult CreatePlayer(CreatePlayerRequest request)
-//         {
-//             StringValues _userId;
-//             var headers= Request.Headers;
-//             if(!headers.TryGetValue("UserId", out _userId))
-//             {
-//                 return Unauthorized();
-//             }    
+        public PlayersController()
+        {
+            _usersService = new UsersService();
+            _playersService = new PlayersService();
+        }
 
-//             var user = _usersService.GetUser(Guid.Parse(_userId));
+        [HttpPost]
+        public IActionResult Create(CreatePlayerRequest request)
+        {
+            StringValues userId;
+            if(!Request.Headers.TryGetValue("UserId", out userId))
+            {
+                return Unauthorized();
+            }
 
-//             if (user == null)
-//             {
-//                 return Unauthorized();
-//             }
+            var user = _usersService.GetById(Guid.Parse(userId));
 
-//             if (user.Profile == Profile.Supporter)
-//             {
-//                 // return Forbid(); //notWorking!
-//                 return StatusCode(403, "User not CBF!");
+            if (user == null)
+            {
+                return Unauthorized();
+            }
 
-//             }
+            if (user.Profile == Profile.Supporter)
+            {
+                return Unauthorized();
+                // return Forbid("Test");
+            }
 
-//             var response = _playersService.Create(request.Name);
+            var response = _playersService.Create(request.TeamId, request.Name);
 
-//             if (!response.IsValid)
-//             {
-//                 return BadRequest(response.Errors);
-//             }
+            if (!response.IsValid)
+            {
+                return BadRequest(response.Errors);
+            }
+            
+            return Ok(response.Id);
+        }
 
-//             return Ok(response.Id);
-//         }
+        [HttpDelete("{id}")]
+        public IActionResult Remove(Guid id)
+        {
+            StringValues userId;
+            if(!Request.Headers.TryGetValue("UserId", out userId))
+            {
+                return Unauthorized();
+            }
 
-//         [HttpGet]
-//         public List<Guid> Get()
-//         {
-//             return _playersService.GetAll();
-//         }
-//     }
-// }
+            var user = _usersService.GetById(Guid.Parse(userId));
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (user.Profile != Profile.CBF)
+            {
+                return Unauthorized();
+            }
+
+            var playerRemoved = _playersService.Remove(id);
+
+            if (playerRemoved == null)
+            {
+                return NotFound();
+            }
+            
+            return NoContent();
+        }
+    }
+}

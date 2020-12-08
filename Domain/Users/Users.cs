@@ -7,12 +7,16 @@ namespace Domain.Users
     public class User : Person
     {
         public Profile Profile{get; set;}
-        public string Password {get; set;}
-        public User(string name, string password, Profile profile) : base (name)
-        {
+        public string Password { get; set; }
+        // Transformar em VO
+        public string Email { get; set; }
+        public User(string name, string password, string email, Profile profile) : base(name)
+        {	        
             Password = password;
+            Email = email;
             Profile = profile;
         }
+        
         private bool ValidateProfile()
         {
             if (Profile != Profile.CBF && Profile != Profile.Supporter)
