@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Primitives;
 
 namespace WebAPI.Controllers.Users
 {
@@ -9,11 +10,60 @@ namespace WebAPI.Controllers.Users
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        public readonly UserService _usersService;
+        public readonly UsersService _usersService;
         public UsersController()
         {
-            _usersService = new UserService();
+            _usersService = new UsersService();
         }
+        [HttpPost]
+        public IActionResult Create(CreateUserRequest request)
+        {
+            StringValues userId;
+            if(!Request.Headers.TryGetValue("UserId", out userId))
+            {
+                return Unauthorized();
+            }
+
+            var user = _usersService.GetById(Guid.Parse(userId));
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (user.Profile == Profile.Supporter)
+            {
+                return Unauthorized();
+            }
+
+            var response = _usersService.Create(
+                request.Name,
+                request.Profile,
+                request.Email,
+                request.Password
+            );
+
+            if (!response.IsValid)
+            {
+                return BadRequest(response.Errors);
+            }
+            
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            var user = _usersService.GetById(id);
+            
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(user);
+        }
+    
         [HttpPost]
         [Route("signup")]
         public IActionResult SingUp(CreateUserRequest request)
@@ -28,9 +78,9 @@ namespace WebAPI.Controllers.Users
                 return Unauthorized("Senha de Cargo Invalida");
             }
             var password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(request.Password));
-            var response = _usersService.Create(request.Name, password, request.Profile);
+            var response = _usersService.Create(request.Name, request.Profile, request.Email, password);
 
-            if (!response.isValid)
+            if (!response.IsValid)
             {
                return BadRequest(response.Errors);
             }

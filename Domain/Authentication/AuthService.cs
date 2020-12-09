@@ -10,7 +10,7 @@ namespace Domain.Authentication
 
         public AuthResponse Login(string email, string password)
         {
-            var user = _usersRepository.GetByEmail(email);
+            var user = _usersRepository.Get(user => user.Email == email);
             if (user == null)
             {
                 return new AuthResponse();
@@ -26,7 +26,7 @@ namespace Domain.Authentication
 
         public User GetById(Guid id)
         {
-            return _usersRepository.GetById(id);
+            return _usersRepository.Get(user => user.Id == id);
         }
     }
 }

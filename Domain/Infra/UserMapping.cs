@@ -22,6 +22,9 @@ namespace Domain.Infra
                 .Property(user => user.Password)
                 .IsRequired()
                 .HasMaxLength(50);
+            builder
+                .HasIndex(user => user.Email)
+                .IsUnique();
         }
     }
 }

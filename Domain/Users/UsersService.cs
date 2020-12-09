@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Domain.Users
 {
-    public class UserService
+    public class UsersService
     {
         private readonly UsersRepository _usersRepository = new UsersRepository();
 
@@ -32,7 +32,7 @@ namespace Domain.Users
         
         public User GetById(Guid id)
         {
-            return _usersRepository.SearchForUserId(id);
+            return _usersRepository.Get(user => user.Id == id);
         }
         public CreatedUserDTO Rename(string name, User target)
         {
@@ -49,11 +49,11 @@ namespace Domain.Users
         }
         public User FindUser(string name)
         {
-            return _usersRepository.FindUser(name);
+            return _usersRepository.Get(user => user.Name == name);
         }
         public User SearchForUserId(Guid id)
         {
-            return _usersRepository.SearchForUserId(id);
+            return _usersRepository.Get(user => user.Id == id);
         }
     }
 }

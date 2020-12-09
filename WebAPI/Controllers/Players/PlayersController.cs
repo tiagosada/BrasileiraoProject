@@ -74,7 +74,7 @@ namespace WebAPI.Controllers.Players
 
             var playerRemoved = _playersService.Remove(id);
 
-            if (playerRemoved == null)
+            if (!playerRemoved)
             {
                 return NotFound();
             }

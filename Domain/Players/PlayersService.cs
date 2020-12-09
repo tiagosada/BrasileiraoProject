@@ -4,6 +4,7 @@ namespace Domain.Players
 {
     public class PlayersService
     {
+        private readonly PlayersRepository _playersRepository = new PlayersRepository();
         public CreatedPlayerDTO Create(Guid teamId, string name)
         {
             var player = new Player(teamId, name);
@@ -11,16 +12,18 @@ namespace Domain.Players
 
             if (playerValidation.isValid)
             {
-                PlayersRepository.Add(player);
+                _playersRepository.Add(player);
                 return new CreatedPlayerDTO(player.Id);
             }
 
             return new CreatedPlayerDTO(playerValidation.errors);
         }
 
-        public Guid? Remove(Guid id)
+        public bool Remove(Guid id)
         {
-            return PlayersRepository.Remove(id);
+            var foundPlayer = _playersRepository.Get(player => player.Id == id);
+            _playersRepository.Remove(foundPlayer);
+            return true;
         }
     }
 }
