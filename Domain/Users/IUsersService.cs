@@ -12,5 +12,6 @@ namespace Domain.Users
         );
 
         User GetById(Guid id);
+        User FindUser(string name);
     }
 }
