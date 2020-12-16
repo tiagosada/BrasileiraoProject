@@ -4,9 +4,14 @@ using System.Linq;
 
 namespace Domain.Users
 {
-    public class UsersService
+    public class UsersService : IUsersService
     {
-        private readonly UsersRepository _usersRepository = new UsersRepository();
+        private readonly IUsersRepository _usersRepository;
+
+        public UsersService(IUsersRepository usersRepository)
+        {
+            _usersRepository = usersRepository;
+        }
 
         public CreatedUserDTO Create(
             string name,

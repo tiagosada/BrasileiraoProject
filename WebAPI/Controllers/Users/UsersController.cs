@@ -10,11 +10,13 @@ namespace WebAPI.Controllers.Users
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        public readonly UsersService _usersService;
-        public UsersController()
+        private readonly IUsersService _usersService;
+        
+        public UsersController(IUsersService usersService)
         {
-            _usersService = new UsersService();
+            _usersService = usersService;
         }
+
         [HttpPost]
         public IActionResult Create(CreateUserRequest request)
         {
@@ -116,7 +118,7 @@ namespace WebAPI.Controllers.Users
             Request.Headers.TryGetValue("Id", out var _id);
             var id = Guid.Parse(_id);
             // Recupera o usuário
-            var foundUser = _usersService.SearchForUserId(id);
+            var foundUser = _usersService.GetById(id);
                      
             // Retorna os dados
             var token = TokenService.GenerateToken(foundUser.Name, foundUser.Profile.ToString());

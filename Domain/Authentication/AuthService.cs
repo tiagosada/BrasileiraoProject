@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Domain.Common;
 using Domain.Users;
 
@@ -6,11 +6,16 @@ namespace Domain.Authentication
 {
     public class AuthService
     {
-        private readonly UsersRepository _usersRepository = new UsersRepository();
+        private readonly IUsersRepository _usersRepository;
+
+        public AuthService(IUsersRepository usersRepository)
+        {
+            _usersRepository = usersRepository;
+        }
 
         public AuthResponse Login(string email, string password)
         {
-            var user = _usersRepository.Get(user => user.Email == email);
+            var user = _usersRepository.Get(x => x.Email == email);
             if (user == null)
             {
                 return new AuthResponse();
@@ -23,10 +28,10 @@ namespace Domain.Authentication
                 ? new AuthResponse(user.Id)
                 : new AuthResponse();
         }
-
+        
         public User GetById(Guid id)
         {
-            return _usersRepository.Get(user => user.Id == id);
+            return _usersRepository.GetById(id);
         }
     }
 }

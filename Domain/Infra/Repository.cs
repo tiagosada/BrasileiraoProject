@@ -6,7 +6,7 @@ using Domain.Entities;
 
 namespace Domain.Infra
 {
-    class Repository<T> where T : Entity
+    public class Repository<T> : IRepository<T> where T : class
     {
         public void Add(T entity)
         {
@@ -24,7 +24,7 @@ namespace Domain.Infra
                 db.SaveChanges();
             }
         }
-        public T Get(Expression<Func<T, bool>> predicate)
+        public T Get(Func<T, bool> predicate)
         {
             using (var db = new BrasileiraoContext())
             {
